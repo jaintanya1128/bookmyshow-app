@@ -45,22 +45,27 @@ app.get("/", async (req, res) => {
   } else {
     res.json(response);
   }
+  console.log("tanya");
 });
 
 // Proxy request after authentication
-app.get("/api/theaters/", (req, res, next) => {
+app.use("/api/theaters/", (req, res, next) => {
+  console.log("redirected to theater service");
   theaterProxy(req, res, next);
 });
 
-app.get("/api/shows/", (req, res, next) => {
+app.use("/api/shows/", (req, res, next) => {
+  console.log("redirected to shows service");
   showsProxy(req, res, next);
 });
 
-app.get("/api/movies", (req, res, next) => {
+app.use("/api/movies", (req, res, next) => {
+  console.log("redirected to movies service");
   moviesProxy(req, res, next);
 });
 
-app.get("/api/booking/", (req, res, next) => {
+app.use("/api/booking/", (req, res, next) => {
+  console.log("redirected to booking service");
   bookingsProxy(req, res, next);
 });
 
