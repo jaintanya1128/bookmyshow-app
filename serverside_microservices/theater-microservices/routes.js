@@ -1,26 +1,26 @@
-const morgan = require('morgan');
-const theaterRoutes = require('./api/routes/theater-routes');
+const morgan = require("morgan");
+const theaterRoutes = require("./api/routes/theater-routes");
 
 module.exports = function(app) {
-	//HTTP request logger middleware
-	app.use(morgan('dev'));
+  //HTTP request logger middleware
+  app.use(morgan("dev"));
 
-	// Routes which should handle requests
-	app.use('/api/theaters/', theaterRoutes);
+  // Routes which should handle requests
+  app.use("/", theaterRoutes);
 
-	//all other routes that can not be handelled by above routes
-	app.use((req, res, next) => {
-		const error = new Error('Not found');
-		error.status = 404;
-		next(error);
-	});
+  //all other routes that can not be handelled by above routes
+  app.use((req, res, next) => {
+    const error = new Error("Not found");
+    error.status = 404;
+    next(error);
+  });
 
-	app.use((error, req, res, next) => {
-		res.status(error.status || 500);
-		res.json({
-			error: {
-				message: error.message
-			}
-		});
-	});
+  app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+      error: {
+        message: error.message
+      }
+    });
+  });
 };
