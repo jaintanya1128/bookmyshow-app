@@ -59,7 +59,7 @@ app.use("/api/shows/", (req, res, next) => {
   showsProxy(req, res, next);
 });
 
-app.use("/api/movies", (req, res, next) => {
+app.use("/api/movies/", (req, res, next) => {
   console.log("redirected to movies service");
   moviesProxy(req, res, next);
 });
