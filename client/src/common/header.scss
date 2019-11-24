@@ -1,19 +1,9 @@
-@import '../scss/dependencies/variables.scss';
+@import "../scss/dependencies/variables.scss";
 
 .header {
-	.cart-icon {
-		position: relative;
-		svg {
-			font-size: 2.75rem;
-			margin-top: 20px;
-			color: $primary-color;
-		}
-		.pill {
-			position: absolute;
-			top: 8px;
-			font-size: 1.25rem;
-			left: 18px;
-			font-weight: bold;
-		}
-	}
+  input[name="search"] {
+    margin: 10px;
+    padding: 10px 20px;
+    width: 100%;
+  }
 }

@@ -1,39 +1,43 @@
-import React, { Component } from 'react';
-import { CardGroup } from 'react-bootstrap';
-import MovieListingComponent from './MovieListing.component';
+import React, { Component } from "react";
+import { CardGroup } from "react-bootstrap";
+import MovieListingComponent from "./MovieListing.component";
+import config from "../config.json";
 
 class MovieListing extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			movieList: []
-		};
-	}
-	componentDidMount() {
-		fetch('https://api.themoviedb.org/4/list/1?api_key=0bd2290e90ff36d0efef4f8f07db8f79')
-			.then(response => response.json())
-			.then(data => {
-				this.setState({ movieList: data.results });
-			});
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      movieList: []
+    };
+  }
+  componentDidMount() {
+    fetch(`${config.apiUrl}/api/movies`)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result.data);
 
-	render() {
-		const productList = this.state.movieList.map(movie => {
-			return (
-				<MovieListingComponent
-					key={movie.id}
-					id={movie.id}
-					imgsrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-					productTitle={movie.title}
-					releaseDate={movie.release_date}
-					desc={movie.overview}
-					//addtoCartHandler={this.props.cartCountUpdater}
-				/>
-			);
-		});
+        this.setState({ movieList: result.data.details.movies });
+      });
+  }
 
-		return <CardGroup>{productList}</CardGroup>;
-	}
+  render() {
+    const productList = this.state.movieList.map(movie => {
+      return (
+        <MovieListingComponent
+          key={movie.id}
+          id={movie.id}
+          name={movie.name}
+          lang={movie.lang}
+          imgsrc={movie.poster_path}
+          releaseDate={movie.release_date}
+          desc={movie.desc}
+          avg_rating={movie.avg_rating}
+        />
+      );
+    });
+
+    return <CardGroup>{productList}</CardGroup>;
+  }
 }
 
 export default MovieListing;
