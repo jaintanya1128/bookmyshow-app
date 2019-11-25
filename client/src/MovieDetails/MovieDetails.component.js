@@ -21,8 +21,6 @@ function MovieDetails(props) {
   }
 
   if (props.productionComp) {
-    //console.log(props.productionComp);
-
     productionCompList = (
       <div className="btn-pill-list">
         {props.productionComp.map((company, index) => {

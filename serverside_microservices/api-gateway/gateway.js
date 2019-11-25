@@ -9,12 +9,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Dummmy service discovery
-const theaterServiceUrl = "http://localhost:5004";
-const showsServiceUrl = "http://localhost:5003";
-const moviesServiceUrl = "http://localhost:5002";
 const bookingServiceUrl = "http://localhost:5001";
+const moviesServiceUrl = "http://localhost:5002";
+const eventsServiceUrl = "http://localhost:5003";
 
-const theaterProxy = httpProxy(theaterServiceUrl);
+const eventProxy = httpProxy(eventsServiceUrl);
 const showsProxy = httpProxy(showsServiceUrl);
 const moviesProxy = httpProxy(moviesServiceUrl);
 const bookingsProxy = httpProxy(bookingServiceUrl);
@@ -29,7 +28,7 @@ app.use((req, res, next) => {
 // Aggregate services after authentication
 app.get("/", async (req, res) => {
   const services = await Promise.all([
-    request({ uri: theaterServiceUrl, json: true }),
+    request({ uri: eventsServiceUrl, json: true }),
     request({ uri: showsServiceUrl, json: true }),
     request({ uri: moviesServiceUrl, json: true }),
     request({ uri: bookingServiceUrl, json: true })
@@ -49,9 +48,9 @@ app.get("/", async (req, res) => {
 });
 
 // Proxy request after authentication
-app.use("/api/theaters/", (req, res, next) => {
-  console.log("redirected to theater service");
-  theaterProxy(req, res, next);
+app.use("/api/events/", (req, res, next) => {
+  console.log("redirected to event service");
+  eventProxy(req, res, next);
 });
 
 app.use("/api/shows/", (req, res, next) => {

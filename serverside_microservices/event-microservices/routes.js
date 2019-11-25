@@ -1,5 +1,5 @@
 const morgan = require("morgan");
-const showsRoutes = require("./api/routes/shows-routes");
+const eventRoutes = require("./api/routes/event-routes");
 const cors = require("cors");
 
 module.exports = function(app) {
@@ -8,10 +8,10 @@ module.exports = function(app) {
 
   app.use(cors());
 
-  //Routes
-  app.use("/", showsRoutes);
+  // Routes which should handle requests
+  app.use("/", eventRoutes);
 
-  //handle error routes that can not be handled above
+  //all other routes that can not be handelled by above routes
   app.use((req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;
