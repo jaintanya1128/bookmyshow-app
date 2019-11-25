@@ -184,3 +184,16 @@ ul {
 .card-body button {
   margin-top: auto;
 }
+
+.btn-pill-list {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.btn-pill {
+  min-width: inherit;
+  margin-right: 10px;
+  padding: 5px 10px;
+  line-height: normal;
+  border-radius: 20px;
+}

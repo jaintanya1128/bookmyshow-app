@@ -67,4 +67,18 @@ class MovieDetails extends Component {
   }
 }
 
+MovieDetails.defaultProps = {
+  name: "",
+  tagline: "",
+  lang: "",
+  imgsrc: "",
+  releaseDate: "",
+  desc: "",
+  avgRating: 0,
+  votingCount: 0,
+  category: [],
+  runtime: 0,
+  productionComp: []
+};
+
 export default MovieDetails;

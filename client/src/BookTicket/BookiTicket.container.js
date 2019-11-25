@@ -13,12 +13,12 @@ class BookTicket extends Component {
     let urlArray = window.location.pathname.split("/");
 
     const movieId = urlArray[urlArray.length - 1];
-    console.log(movieId);
+    console.log("movie id", movieId);
 
     fetch(`${config.apiUrl}/api/shows/movie/${movieId}`)
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        console.log("result:", result);
         this.setState({ booking: result.details });
       });
   }

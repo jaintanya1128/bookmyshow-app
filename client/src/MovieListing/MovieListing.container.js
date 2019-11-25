@@ -11,6 +11,16 @@ class MovieListing extends Component {
     };
   }
   componentDidMount() {
+    document.addEventListener("searched", e => {
+      fetch(`${config.apiUrl}/api/movies/query/${e.detail}`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result.data);
+
+          this.setState({ movieList: result.data.details.movies });
+        });
+    });
+
     fetch(`${config.apiUrl}/api/movies`)
       .then(response => response.json())
       .then(result => {

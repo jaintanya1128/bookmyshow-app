@@ -4,6 +4,38 @@ import { FaHeart, FaFilm } from "react-icons/fa";
 import history from "../history";
 
 function MovieDetails(props) {
+  let categoryList = [];
+  let productionCompList = [];
+  if (props.category) {
+    categoryList = (
+      <div className="btn-pill-list">
+        {props.category.map((cat, index) => {
+          return (
+            <button key={index} type="button" className="btn btn-info btn-pill">
+              {cat}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (props.productionComp) {
+    //console.log(props.productionComp);
+
+    productionCompList = (
+      <div className="btn-pill-list">
+        {props.productionComp.map((company, index) => {
+          return (
+            <button key={index} type="button" className="btn btn-info btn-pill">
+              {company.name}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <Container className="movie-details-wrap">
       <Row>
@@ -19,16 +51,7 @@ function MovieDetails(props) {
           <h5 className="text-mute">Release Date: {props.releaseDate}</h5>
           <h5 className="text-mute">Language: {props.lang}</h5>
           <hr />
-          <button type="button" className="btn btn-success btn-sm">
-            {props.category}
-          </button>
-          {/* {props.category.map(c => {
-            return (
-              <button type="button" class="btn btn-success btn-sm">
-                c
-              </button>
-            );
-          })} */}
+          {categoryList}
           <br />
           <hr />
           <div>
@@ -50,7 +73,7 @@ function MovieDetails(props) {
           <hr />
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-success"
             onClick={() => history.push(`/booking/${props.id}`)}
           >
             Book Ticket
@@ -60,14 +83,15 @@ function MovieDetails(props) {
       <Row>
         <hr />
         <p>{props.desc}</p>
-        <hr />
-        {/* {props.productionComp.map(p => {
-          return (
-            <button type="button" class="btn btn-success btn-sm">
-              p
-            </button>
-          );
-        })} */}
+        <hr className="w-100" />
+        <div>
+          <h3> Production Company: </h3>
+          <br />
+          {productionCompList}
+          <br />
+        </div>
+        <br />
+        <hr className="w-100" />
       </Row>
     </Container>
   );

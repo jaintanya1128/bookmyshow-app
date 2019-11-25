@@ -7,24 +7,17 @@ import logo from "../logo.svg";
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchTxt: ""
-    };
+
     this.searchMovies = this.searchMovies.bind(this);
   }
 
   searchMovies(e) {
     e.preventDefault();
-    console.log(e);
     const data = new FormData(e.target);
 
-    this.setState({ searchTxt: data.get("search") });
-    fetch(`${config.apiUrl}/api/movies/query/${this.state.searchTxt}`)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
-        //this.setState({ booking: result.details });
-      });
+    document.dispatchEvent(
+      new CustomEvent("searched", { detail: data.get("search") })
+    );
   }
   render() {
     return (
