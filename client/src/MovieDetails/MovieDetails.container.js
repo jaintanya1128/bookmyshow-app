@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import config from "../config.json";
+import history from "../history";
 
 import MovieDetailsComponent from "./MovieDetails.component";
 
@@ -7,10 +8,11 @@ class MovieDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieDetails: ""
+      movieDetails: props.currentMovieDetails
     };
     this.bookTicketClickHandler = this.bookTicketClickHandler.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
+    //console.log(props.currentMovieDetails);
   }
   componentDidMount() {
     let urlArray = window.location.pathname.split("/");
@@ -26,24 +28,17 @@ class MovieDetails extends Component {
       });
   }
   timeConvert(n) {
-    // console.log(n);
-    // console.log(typeof n);
-
     var num = n;
     var hours = num / 60;
     var rhours = Math.floor(hours);
     var minutes = (hours - rhours) * 60;
     var rminutes = Math.round(minutes);
-    console.log(rhours);
-    console.log(rminutes);
 
-    return (
-      num + " minutes = " + rhours + " hour(s) and " + rminutes + " minute(s)."
-    );
+    return `${rhours} hour(s) and ${rminutes} minute(s).`;
   }
 
   bookTicketClickHandler() {
-    console.log("im clicked");
+    history.push(`/shows/${this.state.movieDetails.id}`);
   }
   render() {
     return (
@@ -52,14 +47,14 @@ class MovieDetails extends Component {
         name={this.state.movieDetails.name}
         tagline={this.state.movieDetails.tagline}
         lang={this.state.movieDetails.lang}
-        imgsrc={this.state.movieDetails.poster_path}
+        poster_path={this.state.movieDetails.poster_path}
         releaseDate={this.state.movieDetails.release_date}
         desc={this.state.movieDetails.desc}
         avgRating={this.state.movieDetails.avg_rating}
         votingCount={this.state.movieDetails.voting_count}
         category={this.state.movieDetails.category}
-        runtime={this.state.movieDetails.runtime}
-        revenue={this.timeConvert(this.state.movieDetails.revenue)}
+        runtime={this.timeConvert(this.state.movieDetails.runtime)}
+        revenue={this.state.movieDetails.revenue}
         productionComp={this.state.movieDetails.production_companies}
         onClick={this.bookTicketClickHandler}
       />
@@ -71,7 +66,7 @@ MovieDetails.defaultProps = {
   name: "",
   tagline: "",
   lang: "",
-  imgsrc: "",
+  poster_path: "",
   releaseDate: "",
   desc: "",
   avgRating: 0,

@@ -14,7 +14,6 @@ const moviesServiceUrl = "http://localhost:5002";
 const eventsServiceUrl = "http://localhost:5003";
 
 const eventProxy = httpProxy(eventsServiceUrl);
-const showsProxy = httpProxy(showsServiceUrl);
 const moviesProxy = httpProxy(moviesServiceUrl);
 const bookingsProxy = httpProxy(bookingServiceUrl);
 
@@ -29,7 +28,6 @@ app.use((req, res, next) => {
 app.get("/", async (req, res) => {
   const services = await Promise.all([
     request({ uri: eventsServiceUrl, json: true }),
-    request({ uri: showsServiceUrl, json: true }),
     request({ uri: moviesServiceUrl, json: true }),
     request({ uri: bookingServiceUrl, json: true })
   ]);
@@ -51,11 +49,6 @@ app.get("/", async (req, res) => {
 app.use("/api/events/", (req, res, next) => {
   console.log("redirected to event service");
   eventProxy(req, res, next);
-});
-
-app.use("/api/shows/", (req, res, next) => {
-  console.log("redirected to shows service");
-  showsProxy(req, res, next);
 });
 
 app.use("/api/movies/", (req, res, next) => {

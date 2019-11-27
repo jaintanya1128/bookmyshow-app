@@ -1,6 +1,5 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import { Navbar, Container, Row, Col, Form } from "react-bootstrap";
-import config from "../config.json";
 import "./header.scss";
 import logo from "../logo.svg";
 

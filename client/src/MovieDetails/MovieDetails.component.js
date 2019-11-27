@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaHeart, FaFilm } from "react-icons/fa";
-import history from "../history";
+import { FaHeart, FaClock } from "react-icons/fa";
 
 function MovieDetails(props) {
   let categoryList = [];
@@ -38,7 +37,7 @@ function MovieDetails(props) {
     <Container className="movie-details-wrap">
       <Row>
         <Col md={4}>
-          <img src={props.imgsrc} alt="movie banner" />
+          <img src={props.poster_path} alt="movie banner" />
         </Col>
         <Col md={8}>
           <h2 className="text-dark font-weight-bold">{props.name}</h2>
@@ -47,7 +46,10 @@ function MovieDetails(props) {
           </h5>
           <br />
           <h5 className="text-mute">Release Date: {props.releaseDate}</h5>
-          <h5 className="text-mute">Language: {props.lang}</h5>
+          <h5 className="text-mute">
+            Language: {props.lang == "en" ? "English" : "--"}
+          </h5>
+          <h6 className="text-mute">Revenue: ${props.revenue}</h6>
           <hr />
           {categoryList}
           <br />
@@ -55,7 +57,7 @@ function MovieDetails(props) {
           <div>
             <span className="text-mute">Duration : </span>
             <span className="text-danger">
-              <FaFilm /> {props.runtime}
+              <FaClock /> {props.runtime}
             </span>
           </div>
           <div>
@@ -72,15 +74,18 @@ function MovieDetails(props) {
           <button
             type="button"
             className="btn btn-success"
-            onClick={() => history.push(`/booking/${props.id}`)}
+            onClick={props.onClick}
           >
             Book Ticket
           </button>
         </Col>
       </Row>
       <Row>
-        <hr />
-        <p>{props.desc}</p>
+        <hr className="w-100" />
+        <div>
+          <h3> Summary: </h3>
+          <p>{props.desc}</p>
+        </div>
         <hr className="w-100" />
         <div>
           <h3> Production Company: </h3>

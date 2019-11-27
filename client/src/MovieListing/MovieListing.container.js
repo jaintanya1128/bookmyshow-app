@@ -9,6 +9,7 @@ class MovieListing extends Component {
     this.state = {
       movieList: []
     };
+    console.log(props);
   }
   componentDidMount() {
     document.addEventListener("searched", e => {
@@ -38,10 +39,11 @@ class MovieListing extends Component {
           id={movie.id}
           name={movie.name}
           lang={movie.lang}
-          imgsrc={movie.poster_path}
+          poster_path={movie.poster_path}
           releaseDate={movie.release_date}
           desc={movie.desc}
           avg_rating={movie.avg_rating}
+          onClick={this.props.onClick}
         />
       );
     });

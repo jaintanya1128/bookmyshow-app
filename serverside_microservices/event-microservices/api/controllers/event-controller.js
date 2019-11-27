@@ -1,6 +1,8 @@
 const mongoose = require("../../database/dbconnection");
 const theaterModel = require("../../database/models/theater-model");
+const showsModel = require("../../database/models/shows-model");
 const config = require("../../config.json");
+const axios = require("axios");
 
 //save a theater's complete detail
 exports.theaters_create_theater = (req, res, next) => {
@@ -14,7 +16,8 @@ exports.theaters_create_theater = (req, res, next) => {
       return {
         _id: new mongoose.Types.ObjectId(),
         hall_name: h.name,
-        total_seats: h.total_seats,
+        total_rows: h.total_rows,
+        total_columns: h.total_columns,
         screen_size: h.screen_size
       };
     }),
@@ -317,10 +320,11 @@ exports.shows_create_show = (req, res, next) => {
   const show = new showsModel({
     _id: new mongoose.Types.ObjectId(),
     movie_id: req.body.movie_id,
-    theater_id: req.body.theater_id,
-    hall_id: req.body.hall_id,
+    theater: req.body.theater,
+    hall: req.body.hall,
     show_date_time: req.body.show_date_time,
-    status: req.body.status
+    status: req.body.status,
+    booked_seat: req.body.booked_seat
   });
 
   show
@@ -342,17 +346,15 @@ exports.shows_create_show = (req, res, next) => {
     });
 };
 
-//update a show
+//update booked seat of a show
 exports.shows_update_show = (req, res, next) => {
   const id = req.params.id;
 
-  const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.propVal;
-  }
-
   showsModel
-    .update({ _id: id }, { $set: updateOps })
+    .findOneAndUpdate(
+      { _id: id },
+      { $push: { booked_seat: req.body.booked_seat } }
+    )
     .exec()
     .then(result => {
       if (result.nModified === 0) {
@@ -413,22 +415,13 @@ exports.shows_delete_show = (req, res, next) => {
 //get a show complete detail
 exports.shows_get_show = (req, res, next) => {
   const id = req.params.id;
-  let showsObj = {};
-  function updateShowsDetails(key, value) {
-    showsObj[key] = value;
-
-    // console.log("show object");
-    // console.log(showsObj);
-  }
 
   showsModel
     .findById(id)
-    .select("movie_id theater_id hall_id show_date_time status")
+    .populate("theater")
     .exec()
     .then(result => {
       //console.log(`shows result: ${result}`);
-      showsObj.show_date_time = result.show_date_time;
-      showsObj.status = result.status;
 
       if (!result) {
         res.status(404).json({
@@ -438,20 +431,13 @@ exports.shows_get_show = (req, res, next) => {
         });
       }
 
-      axios({
-        method: "get",
-        url: `http://${config.domainName}:${config.gatewayPort}/api/theaters/${result.theater_id}`
-      })
-        .then(response => {
-          const hall = response.data.details.hall.filter(
-            h => h._id == result.hall_id
-          );
-          response.data.details.hall = hall;
-          updateShowsDetails("theater", response.data.details);
-        })
-        .catch(error => {
-          console.log(`error: ${error.message}`);
-        });
+      result.actualHall = result.theater.halls.filter(h =>
+        result.hall.equals(h._id)
+      );
+      let total_seat_count =
+        result.actualHall[0].total_rows * result.actualHall[0].total_columns;
+
+      total_seat_count = total_seat_count > 0 ? total_seat_count : 0;
 
       axios({
         method: "get",
@@ -461,7 +447,8 @@ exports.shows_get_show = (req, res, next) => {
           //console.log("movie result");
 
           //console.log(response.data.details);
-          updateShowsDetails("movie", response.data.details);
+          result.movie = response.data.details ? response.data.details : {};
+          //console.log(result);
         })
         .catch(error => {
           console.log(`error: ${error.message}`);
@@ -473,22 +460,24 @@ exports.shows_get_show = (req, res, next) => {
           status_type: "success",
           message: "the show details are",
           details: {
-            theater: showsObj.theater.name,
-            theater_address: showsObj.theater.address,
-            movie: showsObj.movie.name,
-            movie_desc: showsObj.movie.desc,
-            movie_type: showsObj.movie.category,
-            movie_rating: showsObj.movie.avg_rating,
-            movie_release_date: showsObj.movie.release_date,
-            movie_poster_path: showsObj.movie.poster_path,
-            hall: showsObj.theater.hall[0].hall_name,
+            theater: result.theater.name,
+            theater_address: result.theater.address,
+            hall: result.actualHall[0],
+            total_seat_count: total_seat_count,
+            booked_seat: result.booked_seat,
             show_date_time: new Date(
-              showsObj.show_date_time
+              result.show_date_time
             ).toLocaleDateString(),
-            status: showsObj.status
+            status: result.status,
+            movie: result.movie.name,
+            movie_desc: result.movie.desc,
+            movie_type: result.movie.category,
+            movie_rating: result.movie.avg_rating,
+            movie_release_date: result.movie.release_date,
+            movie_poster_path: result.movie.poster_path
           }
         });
-      }, 2000);
+      }, 1500);
     })
     .catch(err => {
       res.status(500).json({
@@ -502,27 +491,55 @@ exports.shows_get_show = (req, res, next) => {
 //get all shows based on movie
 exports.shows_get_all_bymovie = (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
-
-  let showsObj = {};
-  function updateShowsDetails(key, value) {
-    showsObj[key] = value;
-
-    // console.log("show object");
-    // console.log(showsObj);
-  }
 
   showsModel
+    // .aggregate(
+    //   [
+    //     { $match: { movie_id: id } }
+    //     // {
+    //     //   $group: { _id: "$theater" }
+    //     // }
+    //   ],
+    //   function(err, result) {
+    //     if (err) {
+    //       res.status(500).json({
+    //         status_code: 500,
+    //         status_type: "error",
+    //         message: err.message
+    //       });
+    //     } else {
+    //       console.log(result);
+    //       res.json(result);
+    //     }
+    //   }
+    // );
     .find({ movie_id: id })
-    // .aggregate([
-    //   { $match: { movie_id: id } },
-    //   { $group: { _id: "$theater_id", total: { $sum: 1 } } }
-    // ])
-    .select("movie_id theater_id hall_id show_date_time status")
+    .populate("theater")
     .exec()
-    .then(result => {
-      console.log(result);
-      res.status(200).json({ data: result });
+    .then(results => {
+      console.log(results.length);
+      const resultList = results.map(result => {
+        result.actualHall = result.theater.halls.filter(h =>
+          result.hall.equals(h._id)
+        );
+        let total_seat_count =
+          result.actualHall[0].total_rows * result.actualHall[0].total_columns;
+
+        total_seat_count = total_seat_count > 0 ? total_seat_count : 0;
+
+        return {
+          theater: result.theater.name,
+          theater_address: result.theater.address,
+          hall: result.actualHall[0],
+          total_seat_count: total_seat_count,
+          booked_seat: result.booked_seat,
+          show_date: new Date(result.show_date_time).toLocaleDateString(),
+          show_time: new Date(result.show_date_time).toLocaleTimeString(),
+          status: result.status
+        };
+      });
+
+      res.status(200).json(resultList);
     })
     .catch(err => {
       res.status(500).json({
@@ -531,70 +548,4 @@ exports.shows_get_all_bymovie = (req, res, next) => {
         message: err.message
       });
     });
-
-  // showsModel
-  //   .find({ movie_id: id })
-  //   .select("movie_id theater_id hall_id show_date_time status")
-  //   //.group({ theater_id: $theater_id })
-  //   .exec()
-  //   .then(result => {
-  //     console.log(`shows result: ${result}`);
-  //     console.log(result.length);
-  //     console.log(typeof result);
-
-  //     if (result.length === 0) {
-  //       res.status(404).json({
-  //         status_code: 404,
-  //         status_type: "error",
-  //         message: "No valid entry found for provided ID"
-  //       });
-  //     }
-
-  //     axios({
-  //       method: "get",
-  //       url: `http://${config.domainName}:${config.gatewayPort}/api/theaters/${result.theater_id}`
-  //     })
-  //       .then(response => {
-  //         const hall = response.data.details.hall.filter(
-  //           h => h._id == result.hall_id
-  //         );
-  //         response.data.details.hall = hall;
-  //         updateShowsDetails("theater", response.data.details);
-  //       })
-  //       .catch(error => {
-  //         console.log(`error: ${error.message}`);
-  //       });
-
-  //     console.log("final showsObj");
-  //     console.log(showsObj);
-  //     setTimeout(function() {
-  //       res.status(200).json({
-  //         status_code: 200,
-  //         status_type: "success",
-  //         message: "the show details are"
-  //         // details: {
-  //         //   theater: showsObj.theater.name,
-  //         //   theater_address: showsObj.theater.address,
-  //         //   movie: showsObj.movie.name,
-  //         //   movie_desc: showsObj.movie.desc,
-  //         //   movie_type: showsObj.movie.category,
-  //         //   movie_rating: showsObj.movie.avg_rating,
-  //         //   movie_release_date: showsObj.movie.release_date,
-  //         //   movie_poster_path: showsObj.movie.poster_path,
-  //         //   hall: showsObj.theater.hall[0].hall_name,
-  //         //   show_date_time: new Date(
-  //         //     showsObj.show_date_time
-  //         //   ).toLocaleDateString(),
-  //         //   status: showsObj.status
-  //         // }
-  //       });
-  //     }, 2000);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({
-  //       status_code: 500,
-  //       status_type: "error",
-  //       message: err.message
-  //     });
-  //   });
 };

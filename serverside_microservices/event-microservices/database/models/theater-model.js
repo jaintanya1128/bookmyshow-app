@@ -1,5 +1,4 @@
-const mongoose = require('../dbconnection');
+const mongoose = require("../dbconnection");
+const theaterSchema = require("../schemas/theater-schema");
 
-const theaterSchema = require('../schemas/theater-schema');
-
-module.exports = mongoose.model('Theaters', theaterSchema);
+module.exports = mongoose.model("Theaters", theaterSchema);

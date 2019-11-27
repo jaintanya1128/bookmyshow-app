@@ -47,5 +47,3 @@ exports.bookings_get_booking = (req, res, next) => {
 exports.bookings_get_all = (req, res, next) => {
   res.status(200).json({ message: "success" });
 };
-
-// exports.bookings_get_all_bytheater = (req, res, next) => {};
