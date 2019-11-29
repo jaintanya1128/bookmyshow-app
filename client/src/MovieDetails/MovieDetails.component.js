@@ -47,7 +47,7 @@ function MovieDetails(props) {
           <br />
           <h5 className="text-mute">Release Date: {props.releaseDate}</h5>
           <h5 className="text-mute">
-            Language: {props.lang == "en" ? "English" : "--"}
+            Language: {props.lang === "en" ? "English" : "--"}
           </h5>
           <h6 className="text-mute">Revenue: ${props.revenue}</h6>
           <hr />

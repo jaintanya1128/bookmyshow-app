@@ -197,3 +197,43 @@ ul {
   line-height: normal;
   border-radius: 20px;
 }
+.seat-layout-wrap {
+  padding: 20px 50px;
+  border: 1px solid;
+  text-align: center;
+  width: fit-content;
+  margin: 30px auto;
+}
+
+.seat-layout-wrap .row-name {
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+}
+
+.seat-layout-wrap .single-seat {
+  padding: 2px 15px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  text-align: center;
+  display: inline-block;
+  height: 30px;
+  cursor: pointer;
+}
+.seat-layout-wrap .screen {
+  border-top: 5px solid #474747;
+  width: 130px;
+  height: 5px;
+  margin: 20px auto 0;
+}
+
+.btn-book-ticket {
+  min-width: auto;
+  margin: 0 auto;
+  display: block;
+}
+#no-of-seats {
+  display: inline-block;
+  width: 50px;
+  margin-left: 20px;
+}

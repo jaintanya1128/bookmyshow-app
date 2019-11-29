@@ -7,15 +7,15 @@ class ShowsList extends Component {
     super(props);
     this.state = {
       eventsList: [],
-      currentMovieDetails: props.currentMovieDetails
+      movieID: 0
     };
-    //console.log(props.currentMovieDetails);
   }
   componentDidMount() {
     let urlArray = window.location.pathname.split("/");
 
     const movieId = urlArray[urlArray.length - 1];
     //console.log("movie id", movieId);
+    this.setState({ movieID: movieId });
 
     fetch(`${config.apiUrl}/api/events/shows/movie/${movieId}`)
       .then(response => response.json())
@@ -27,15 +27,15 @@ class ShowsList extends Component {
   render() {
     return (
       <ShowsListComponent
-        movieDetails={this.state.currentMovieDetails}
         eventsList={this.state.eventsList}
+        selectedEventUpdater={this.props.selectedEventUpdater}
+        movieId={this.state.movieID}
       />
     );
   }
 }
 
 ShowsList.defaultProps = {
-  movieDetails: [],
   eventsList: []
 };
 export default ShowsList;

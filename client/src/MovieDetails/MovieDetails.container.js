@@ -12,7 +12,6 @@ class MovieDetails extends Component {
     };
     this.bookTicketClickHandler = this.bookTicketClickHandler.bind(this);
     this.timeConvert = this.timeConvert.bind(this);
-    //console.log(props.currentMovieDetails);
   }
   componentDidMount() {
     let urlArray = window.location.pathname.split("/");

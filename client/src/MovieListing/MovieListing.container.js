@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { CardGroup } from "react-bootstrap";
+import { CardGroup, Container } from "react-bootstrap";
 import MovieListingComponent from "./MovieListing.component";
 import config from "../config.json";
 
@@ -9,15 +9,13 @@ class MovieListing extends Component {
     this.state = {
       movieList: []
     };
-    console.log(props);
   }
   componentDidMount() {
     document.addEventListener("searched", e => {
       fetch(`${config.apiUrl}/api/movies/query/${e.detail}`)
         .then(response => response.json())
         .then(result => {
-          console.log(result.data);
-
+          //console.log(result.data);
           this.setState({ movieList: result.data.details.movies });
         });
     });
@@ -25,7 +23,7 @@ class MovieListing extends Component {
     fetch(`${config.apiUrl}/api/movies`)
       .then(response => response.json())
       .then(result => {
-        console.log(result.data);
+        //console.log(result.data);
 
         this.setState({ movieList: result.data.details.movies });
       });
@@ -48,7 +46,11 @@ class MovieListing extends Component {
       );
     });
 
-    return <CardGroup>{productList}</CardGroup>;
+    return (
+      <Container>
+        <CardGroup>{productList}</CardGroup>
+      </Container>
+    );
   }
 }
 

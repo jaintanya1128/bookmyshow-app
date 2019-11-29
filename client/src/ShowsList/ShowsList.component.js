@@ -1,35 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaFilm, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import history from "../history";
 
 function ShowsList(props) {
+  console.log("In ShowListing component");
   console.log(props);
   return (
-    <Container className="movie-details-wrap">
-      <Row>
-        <Col md={4}>
-          <img src={props.movieDetails.poster_path} alt="movie banner" />
-        </Col>
-        <Col md={8}>
-          <h2 className="text-dark font-weight-bold">
-            {props.movieDetails.name}
-          </h2>
-          <h5 className="font-italic font-weight-light text-dark">
-            {props.movieDetails.desc}
-          </h5>
-          <br />
-          <h5 className="text-mute">
-            Release Date: {props.movieDetails.releaseDate}
-          </h5>
-          <h5>
-            <span className="text-mute">Average Rating : </span>
-            <span className="text-danger">
-              <FaFilm /> {props.movieDetails.avg_rating}
-            </span>
-          </h5>
-        </Col>
-        <hr className="w-100" />
-      </Row>
+    <Container className="movie-shows-list">
       {props.eventsList.length > 0 &&
         props.eventsList.map((event, index) => {
           return (
@@ -43,7 +21,10 @@ function ShowsList(props) {
                 <button
                   type="button"
                   className="btn btn-info btn-pill mb-3"
-                  //onClick={}
+                  onClick={() => {
+                    props.selectedEventUpdater(event);
+                    history.push(`/booking/${props.movieId}`);
+                  }}
                 >
                   {event.show_date} - {event.show_time}
                 </button>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Container, Row, Col, Form } from "react-bootstrap";
 import "./header.scss";
+import history from "../history";
 import logo from "../logo.svg";
 
 class Header extends Component {
@@ -17,6 +18,7 @@ class Header extends Component {
     document.dispatchEvent(
       new CustomEvent("searched", { detail: data.get("search") })
     );
+    history.push("/");
   }
   render() {
     return (

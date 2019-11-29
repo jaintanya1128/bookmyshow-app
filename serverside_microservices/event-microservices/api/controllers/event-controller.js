@@ -495,10 +495,20 @@ exports.shows_get_all_bymovie = (req, res, next) => {
   showsModel
     // .aggregate(
     //   [
-    //     { $match: { movie_id: id } }
-    //     // {
-    //     //   $group: { _id: "$theater" }
-    //     // }
+    //     { $match: { movie_id: id } },
+    //     {
+    //       $group: { _id: "$theater", movie_id: "$movie_id" }
+    //     },
+    //     {
+    //       $project: {
+    //         movie_id: 1,
+    //         booked_seat: 1,
+    //         theater: 1,
+    //         hall: 1,
+    //         show_date_time: 1,
+    //         status: 1
+    //       }
+    //     }
     //   ],
     //   function(err, result) {
     //     if (err) {
