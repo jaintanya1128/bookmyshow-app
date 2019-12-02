@@ -66,6 +66,12 @@ class BookTicket extends Component {
     this.setState({ seatLayout: seatLayouttemp });
   }
 
+  // shouldComponentUpdate() {
+  //   if (this.state.bookedSeats.length === 0) {
+  //     return false;
+  //   }
+  // }
+
   bookingSeatCountChangeHandler(count) {
     this.setState({
       maxSeatBookingCount: count
@@ -94,8 +100,16 @@ class BookTicket extends Component {
     }
   }
   singleSeatClickHandler(seat) {
-    console.log(seat);
-    seat = `${seat}:booked`;
+    let tempArry = this.state.seatLayout;
+
+    tempArry[
+      tempArry.map((x, i) => [i, x]).filter(x => x[1] == seat)[0][0]
+    ] = `${seat}:booked`;
+
+    this.setState({
+      seatLayout: [...tempArry]
+    });
+
     this.setState(previousState => ({
       bookedSeats: [...previousState.bookedSeats, seat]
     }));
@@ -103,6 +117,7 @@ class BookTicket extends Component {
 
   render() {
     console.log("booking container: render");
+    console.log(this.state.bookedSeats);
     return (
       <BookTicketComponent
         totalRows={this.props.selectedEventDetails.hall.total_rows}
@@ -112,6 +127,7 @@ class BookTicket extends Component {
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}
+        bookedSeats={this.state.bookedSeats}
       />
     );
   }

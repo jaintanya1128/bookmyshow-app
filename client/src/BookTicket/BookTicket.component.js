@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 function BookTicket(props) {
-  console.log(props.seatLayout);
   return (
     <Container>
       <Row>
