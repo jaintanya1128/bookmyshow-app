@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 function BookTicket(props) {
+  console.log(props.seatLayout);
   return (
     <Container>
       <Row>
@@ -49,18 +50,20 @@ function BookTicket(props) {
         {props.seatLayout.map((seat, index) => {
           if (seat !== "") {
             return (
-              <span
+              <button
                 key={index}
                 className="single-seat"
                 onClick={() => props.singleSeatClickHandler(seat)}
+                disabled={seat.includes(":booked") ? true : false}
               >
-                {seat}
-              </span>
+                {seat.includes(":booked") ? seat.replace(":booked", "") : seat}
+              </button>
             );
           } else {
             return <br key={index} />;
           }
         })}
+
         <div className="screen">
           <span className="text-mute text-small">All eyes this side</span>
         </div>

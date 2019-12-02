@@ -1,36 +1,21 @@
 import React, { Component } from "react";
 import BookTicketComponent from "./BookTicket.component";
+import config from "../config.json";
+
 class BookTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
       maxSeatBookingCount: 0,
-      bookedSeats: []
+      bookedSeats: [],
+      seatLayout: []
     };
     this.bookTicketClickHandler = this.bookTicketClickHandler.bind(this);
     this.singleSeatClickHandler = this.singleSeatClickHandler.bind(this);
-    console.log(props);
   }
   componentDidMount() {
     console.log("booking: componentDidMount");
-  }
-
-  bookingSeatCountChangeHandler(count) {
-    this.setState({
-      maxSeatBookingCount: count
-    });
-  }
-  bookTicketClickHandler() {
-    console.log("im clicked to book final tickets");
-  }
-  singleSeatClickHandler(seat) {
-    this.setState({
-      bookedSeats: [...this.state.bookedSeats, seat]
-    });
-  }
-
-  render() {
-    let seatLayout = [];
+    let seatLayouttemp = [];
     let rowName = [
       "A",
       "B",
@@ -65,10 +50,59 @@ class BookTicket extends Component {
         c < this.props.selectedEventDetails.hall.total_columns;
         c++
       ) {
-        seatLayout.push(`${rowName[r]}${c}`);
+        seatLayouttemp.push(`${rowName[r]}${c}`);
       }
-      seatLayout.push("");
+      seatLayouttemp.push("");
     }
+
+    this.props.selectedEventDetails.booked_seat.forEach(e1 =>
+      seatLayouttemp.forEach((e2, i) => {
+        if (e1 == e2) {
+          seatLayouttemp[i] = `${e2}:booked`;
+        }
+      })
+    );
+
+    this.setState({ seatLayout: seatLayouttemp });
+  }
+
+  bookingSeatCountChangeHandler(count) {
+    this.setState({
+      maxSeatBookingCount: count
+    });
+  }
+  bookTicketClickHandler() {
+    console.log("im clicked to book final tickets");
+    console.log(this.state.bookedSeats);
+    try {
+      fetch(
+        `${config.apiUrl}/api/events/shows/${this.props.selectedEventDetails.show_id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ booked_seat: this.state.bookedSeats }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  singleSeatClickHandler(seat) {
+    console.log(seat);
+    seat = `${seat}:booked`;
+    this.setState(previousState => ({
+      bookedSeats: [...previousState.bookedSeats, seat]
+    }));
+  }
+
+  render() {
+    console.log("booking container: render");
     return (
       <BookTicketComponent
         totalRows={this.props.selectedEventDetails.hall.total_rows}
@@ -77,7 +111,7 @@ class BookTicket extends Component {
         showTime={this.props.selectedEventDetails.show_time}
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
-        seatLayout={seatLayout}
+        seatLayout={this.state.seatLayout}
       />
     );
   }

@@ -357,6 +357,7 @@ exports.shows_update_show = (req, res, next) => {
     )
     .exec()
     .then(result => {
+      console.log(result);
       if (result.nModified === 0) {
         res.status(500).json({
           status_code: 500,
@@ -538,6 +539,7 @@ exports.shows_get_all_bymovie = (req, res, next) => {
         total_seat_count = total_seat_count > 0 ? total_seat_count : 0;
 
         return {
+          show_id: result._id,
           theater: result.theater.name,
           theater_address: result.theater.address,
           hall: result.actualHall[0],

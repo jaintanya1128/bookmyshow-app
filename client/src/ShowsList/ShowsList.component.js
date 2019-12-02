@@ -4,8 +4,6 @@ import { FaHeart } from "react-icons/fa";
 import history from "../history";
 
 function ShowsList(props) {
-  console.log("In ShowListing component");
-  console.log(props);
   return (
     <Container className="movie-shows-list">
       {props.eventsList.length > 0 &&
