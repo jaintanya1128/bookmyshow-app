@@ -161,28 +161,31 @@ ul {
   list-style: none;
 }
 
-.card-group > .card {
-  @include media-breakpoint-up(sm) {
-    flex: 1 0 30%;
-    max-width: 30%;
-    margin: 20px;
-  }
-  &:first-child {
+.card-group {
+  > .card {
     @include media-breakpoint-up(sm) {
-      margin-left: 0;
+      flex: 1 0 30%;
+      max-width: 30%;
+      margin: 20px;
+    }
+    &:first-child {
+      @include media-breakpoint-up(sm) {
+        margin-left: 0;
+      }
     }
   }
-}
-.card-text {
-  max-height: 148px;
-  overflow: hidden;
+
+  .card-text {
+    max-height: 148px;
+    overflow: hidden;
+  }
 }
 .card-body {
   display: flex;
   flex-flow: column nowrap;
-}
-.card-body button {
-  margin-top: auto;
+  button {
+    margin-top: auto;
+  }
 }
 
 .btn-pill-list {
@@ -203,36 +206,47 @@ ul {
   text-align: center;
   width: fit-content;
   margin: 30px auto;
-}
 
-.seat-layout-wrap .row-name {
-  min-width: 20px;
-  text-align: center;
-  display: inline-block;
-}
+  .row-name {
+    min-width: 20px;
+    text-align: center;
+    display: inline-block;
+  }
 
-.seat-layout-wrap .single-seat {
-  padding: 2px 15px;
-  margin: 5px;
-  border: 1px solid #ddd;
-  text-align: center;
-  display: inline-block;
-  height: 30px;
-  cursor: pointer;
-}
-.seat-layout-wrap .screen {
-  border-top: 5px solid #474747;
-  width: 130px;
-  height: 5px;
-  margin: 20px auto 0;
-}
+  .single-seat {
+    padding: 2px 4px;
+    margin: 5px;
+    border: 1px solid $dim-gray;
+    text-align: center;
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    font-size: 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    &:disabled {
+      background-color: $eggshell;
+      color: $dim-gray;
+    }
+    &.selected {
+      background-color: $green;
+    }
+  }
 
-.btn-book-ticket {
-  min-width: auto;
-  margin: 0 auto;
-  display: block;
+  .screen {
+    border-top: 5px solid $charcoal-three;
+    width: 130px;
+    height: 5px;
+    margin: 20px auto 0;
+  }
+
+  .btn-book-ticket {
+    min-width: auto;
+    margin: 0 auto;
+    display: block;
+  }
 }
-#no-of-seats {
+.select-seat-form select {
   display: inline-block;
   width: 50px;
   margin-left: 20px;

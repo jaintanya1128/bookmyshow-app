@@ -8,11 +8,18 @@ class BookTicket extends Component {
     this.state = {
       maxSeatBookingCount: 0,
       bookedSeats: [],
-      seatLayout: []
+      seatLayout: [],
+      showError: false
     };
     this.bookTicketClickHandler = this.bookTicketClickHandler.bind(this);
     this.singleSeatClickHandler = this.singleSeatClickHandler.bind(this);
+    this.bookingSeatCountChangeHandler = this.bookingSeatCountChangeHandler.bind(
+      this
+    );
+    console.log("BookTicket-container: constructor");
+    console.log(props);
   }
+
   componentDidMount() {
     console.log("booking: componentDidMount");
     let seatLayouttemp = [];
@@ -66,17 +73,13 @@ class BookTicket extends Component {
     this.setState({ seatLayout: seatLayouttemp });
   }
 
-  // shouldComponentUpdate() {
-  //   if (this.state.bookedSeats.length === 0) {
-  //     return false;
-  //   }
-  // }
-
-  bookingSeatCountChangeHandler(count) {
+  bookingSeatCountChangeHandler(e) {
+    //console.log(e.target.value);
     this.setState({
-      maxSeatBookingCount: count
+      maxSeatBookingCount: e.target.value
     });
   }
+
   bookTicketClickHandler() {
     console.log("im clicked to book final tickets");
     console.log(this.state.bookedSeats);
@@ -99,25 +102,34 @@ class BookTicket extends Component {
       console.log(err);
     }
   }
-  singleSeatClickHandler(seat) {
-    let tempArry = this.state.seatLayout;
 
-    tempArry[
-      tempArry.map((x, i) => [i, x]).filter(x => x[1] == seat)[0][0]
-    ] = `${seat}:booked`;
+  singleSeatClickHandler(e) {
+    const seat = e.target.value;
+    if (this.state.bookedSeats.length < this.state.maxSeatBookingCount) {
+      e.currentTarget.classList.add("selected");
 
-    this.setState({
-      seatLayout: [...tempArry]
-    });
+      let tempArry = this.state.seatLayout;
 
-    this.setState(previousState => ({
-      bookedSeats: [...previousState.bookedSeats, seat]
-    }));
+      tempArry[
+        tempArry.map((x, i) => [i, x]).filter(x => x[1] == seat)[0][0]
+      ] = `${seat}:booked`;
+
+      this.setState({
+        seatLayout: [...tempArry]
+      });
+
+      this.setState(previousState => ({
+        bookedSeats: [...previousState.bookedSeats, seat]
+      }));
+    } else {
+      this.setState(prevState => ({
+        showError: !prevState.showError
+      }));
+    }
   }
 
   render() {
-    console.log("booking container: render");
-    console.log(this.state.bookedSeats);
+    console.log("bookTicket:render");
     return (
       <BookTicketComponent
         totalRows={this.props.selectedEventDetails.hall.total_rows}
@@ -127,7 +139,8 @@ class BookTicket extends Component {
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}
-        bookedSeats={this.state.bookedSeats}
+        bookingSeatCountChangeHandler={this.bookingSeatCountChangeHandler}
+        showError={this.state.showError}
       />
     );
   }

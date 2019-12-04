@@ -9,12 +9,15 @@ class ShowsList extends Component {
       eventsList: [],
       movieID: 0
     };
+    console.log("ShowsList-container: constructor");
+    console.log(props);
   }
   componentDidMount() {
     let urlArray = window.location.pathname.split("/");
 
     const movieId = urlArray[urlArray.length - 1];
-    //console.log("movie id", movieId);
+    console.log("ShowsList-container: componentDidMount");
+    console.log("movie id", movieId);
     this.setState({ movieID: movieId });
 
     fetch(`${config.apiUrl}/api/events/shows/movie/${movieId}`)

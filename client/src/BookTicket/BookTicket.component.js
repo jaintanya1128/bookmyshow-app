@@ -1,23 +1,27 @@
 import React from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 function BookTicket(props) {
+  console.log(props.showError);
   return (
     <Container>
       <Row>
         <Form className="select-seat-form col-md-4">
           <Form.Group controlId="no-of-seats">
             <Form.Label>How many Seats?</Form.Label>
-            <Form.Control as="select">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
+            <Form.Control
+              as="select"
+              onChange={props.bookingSeatCountChangeHandler}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
             </Form.Control>
           </Form.Group>
         </Form>
@@ -45,6 +49,11 @@ function BookTicket(props) {
           </button>
         </Col>
       </Row>
+      <Row>
+        {/* <p style={`display: ${props.showError}`}>
+          You are exceeding the maximum seat count selected. Please re-select
+        </p> */}
+      </Row>
       <div className="seat-layout-wrap">
         {props.seatLayout.map((seat, index) => {
           if (seat !== "") {
@@ -52,8 +61,11 @@ function BookTicket(props) {
               <button
                 key={index}
                 className="single-seat"
-                onClick={() => props.singleSeatClickHandler(seat)}
+                onClick={props.singleSeatClickHandler}
                 disabled={seat.includes(":booked") ? true : false}
+                value={
+                  seat.includes(":booked") ? seat.replace(":booked", "") : seat
+                }
               >
                 {seat.includes(":booked") ? seat.replace(":booked", "") : seat}
               </button>
