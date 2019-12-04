@@ -6,7 +6,7 @@ class BookTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      maxSeatBookingCount: 0,
+      maxSeatBookingCount: 1,
       bookedSeats: [],
       seatLayout: [],
       showError: false
@@ -17,11 +17,9 @@ class BookTicket extends Component {
       this
     );
     console.log("BookTicket-container: constructor");
-    console.log(props);
   }
 
   componentDidMount() {
-    console.log("booking: componentDidMount");
     let seatLayouttemp = [];
     let rowName = [
       "A",
@@ -74,7 +72,6 @@ class BookTicket extends Component {
   }
 
   bookingSeatCountChangeHandler(e) {
-    //console.log(e.target.value);
     this.setState({
       maxSeatBookingCount: e.target.value
     });
@@ -121,10 +118,12 @@ class BookTicket extends Component {
       this.setState(previousState => ({
         bookedSeats: [...previousState.bookedSeats, seat]
       }));
-    } else {
-      this.setState(prevState => ({
-        showError: !prevState.showError
-      }));
+    } else if (
+      this.state.bookedSeats.length == this.state.maxSeatBookingCount
+    ) {
+      this.setState({
+        showError: true
+      });
     }
   }
 

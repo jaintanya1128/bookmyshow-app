@@ -225,8 +225,8 @@ ul {
     border-radius: 7px;
     cursor: pointer;
     &:disabled {
-      background-color: $eggshell;
-      color: $dim-gray;
+      background-color: $brown-grey;
+      color: $charcoal-three;
     }
     &.selected {
       background-color: $green;
@@ -250,4 +250,14 @@ ul {
   display: inline-block;
   width: 50px;
   margin-left: 20px;
+}
+
+.error {
+  display: block;
+  width: 100%;
+  color: $red;
+  padding-top: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
 }

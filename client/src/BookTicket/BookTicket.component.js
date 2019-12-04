@@ -50,9 +50,12 @@ function BookTicket(props) {
         </Col>
       </Row>
       <Row>
-        {/* <p style={`display: ${props.showError}`}>
+        <p
+          className="error"
+          style={{ display: props.showError == false ? "none" : "block" }}
+        >
           You are exceeding the maximum seat count selected. Please re-select
-        </p> */}
+        </p>
       </Row>
       <div className="seat-layout-wrap">
         {props.seatLayout.map((seat, index) => {
