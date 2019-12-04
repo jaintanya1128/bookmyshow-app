@@ -47,8 +47,8 @@ exports.theaters_create_theater = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -91,8 +91,8 @@ exports.theaters_update_theater = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -136,8 +136,8 @@ exports.theaters_delete_theater = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -180,8 +180,8 @@ exports.theaters_get_theater = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -221,8 +221,8 @@ exports.theaters_get_all = (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -264,8 +264,8 @@ exports.theaters_get_all_bylocation = (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -307,8 +307,8 @@ exports.theaters_get_all_bybrand = (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -338,8 +338,8 @@ exports.shows_create_show = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -373,8 +373,8 @@ exports.shows_update_show = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -405,8 +405,8 @@ exports.shows_delete_show = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -481,8 +481,8 @@ exports.shows_get_show = (req, res, next) => {
       }, 1500);
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -554,8 +554,8 @@ exports.shows_get_all_bymovie = (req, res, next) => {
       res.status(200).json(resultList);
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });

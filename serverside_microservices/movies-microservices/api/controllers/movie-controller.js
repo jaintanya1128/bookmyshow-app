@@ -49,8 +49,8 @@ exports.movies_create_movie = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -77,7 +77,7 @@ exports.movies_get_movie = (req, res, next) => {
 
   axios({
     method: "get",
-    url: `https://api.themoviedb.org/3/movie/${id}?api_key=${config.api_key}`
+    url: `https://api.themoviedb.org/3/movie/${id}`
   })
     .then(result => {
       result = result.data;
@@ -103,8 +103,9 @@ exports.movies_get_movie = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      console.log(err.response.status);
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -142,8 +143,8 @@ exports.movies_get_all = (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
@@ -185,8 +186,8 @@ exports.movies_search_movies = (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });

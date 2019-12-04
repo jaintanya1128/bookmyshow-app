@@ -22,8 +22,8 @@ exports.bookings_create_booking = (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status_code: 500,
+      res.status(err.response.status).json({
+        status_code: err.response.status,
         status_type: "error",
         message: err.message
       });
