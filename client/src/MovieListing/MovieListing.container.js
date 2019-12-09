@@ -17,6 +17,9 @@ class MovieListing extends Component {
         .then(result => {
           //console.log(result.data);
           this.setState({ movieList: result.data.details.movies });
+        })
+        .catch(err => {
+          console.log(err.message);
         });
     });
 
@@ -24,8 +27,10 @@ class MovieListing extends Component {
       .then(response => response.json())
       .then(result => {
         //console.log(result.data);
-
         this.setState({ movieList: result.data.details.movies });
+      })
+      .catch(err => {
+        console.log(err.message);
       });
   }
 
@@ -53,5 +58,16 @@ class MovieListing extends Component {
     );
   }
 }
+
+MovieListing.defaultProps = {
+  key: 0,
+  id: 0,
+  name: "",
+  lang: "",
+  poster_path: "",
+  releaseDate: "",
+  desc: "",
+  avg_rating: 0
+};
 
 export default MovieListing;

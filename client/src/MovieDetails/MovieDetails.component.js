@@ -3,12 +3,27 @@ import { Container, Row, Col } from "react-bootstrap";
 import { FaHeart, FaClock } from "react-icons/fa";
 
 function MovieDetails(props) {
+  let {
+    category,
+    productionComp,
+    poster_path,
+    name,
+    tagline,
+    releaseDate,
+    lang,
+    revenue,
+    avgRating,
+    runtime,
+    votingCount,
+    onClick,
+    desc
+  } = { ...props };
   let categoryList = [];
   let productionCompList = [];
-  if (props.category) {
+  if (category) {
     categoryList = (
       <div className="btn-pill-list">
-        {props.category.map((cat, index) => {
+        {category.map((cat, index) => {
           return (
             <button key={index} type="button" className="btn btn-info btn-pill">
               {cat}
@@ -19,10 +34,10 @@ function MovieDetails(props) {
     );
   }
 
-  if (props.productionComp) {
+  if (productionComp) {
     productionCompList = (
       <div className="btn-pill-list">
-        {props.productionComp.map((company, index) => {
+        {productionComp.map((company, index) => {
           return (
             <button key={index} type="button" className="btn btn-info btn-pill">
               {company.name}
@@ -37,19 +52,17 @@ function MovieDetails(props) {
     <Container className="movie-details-wrap">
       <Row>
         <Col md={4}>
-          <img src={props.poster_path} alt="movie banner" />
+          <img src={poster_path} alt="movie banner" />
         </Col>
         <Col md={8}>
-          <h2 className="text-dark font-weight-bold">{props.name}</h2>
-          <h5 className="font-italic font-weight-light text-dark">
-            {props.tagline}
-          </h5>
+          <h2 className="text-dark font-weight-bold">{name}</h2>
+          <h5 className="font-italic font-weight-light text-dark">{tagline}</h5>
           <br />
-          <h5 className="text-mute">Release Date: {props.releaseDate}</h5>
+          <h5 className="text-mute">Release Date: {releaseDate}</h5>
           <h5 className="text-mute">
-            Language: {props.lang === "en" ? "English" : "--"}
+            Language: {lang === "en" ? "English" : "--"}
           </h5>
-          <h6 className="text-mute">Revenue: ${props.revenue}</h6>
+          <h6 className="text-mute">Revenue: ${revenue}</h6>
           <hr />
           {categoryList}
           <br />
@@ -57,25 +70,21 @@ function MovieDetails(props) {
           <div>
             <span className="text-mute">Duration : </span>
             <span className="text-danger">
-              <FaClock /> {props.runtime}
+              <FaClock /> {runtime}
             </span>
           </div>
           <div>
             <span className="text-mute">Average Rating : </span>
             <span className="text-danger">
-              <FaHeart /> {props.avgRating}
+              <FaHeart /> {avgRating}
             </span>
           </div>
           <div>
             <span className="text-mute">Voting Count : </span>
-            <span className="text-danger">{props.votingCount}</span>
+            <span className="text-danger">{votingCount}</span>
           </div>
           <hr />
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={props.onClick}
-          >
+          <button type="button" className="btn btn-success" onClick={onClick}>
             Book Ticket
           </button>
         </Col>
@@ -84,7 +93,7 @@ function MovieDetails(props) {
         <hr className="w-100" />
         <div>
           <h3> Summary: </h3>
-          <p>{props.desc}</p>
+          <p>{desc}</p>
         </div>
         <hr className="w-100" />
         <div>
@@ -99,5 +108,21 @@ function MovieDetails(props) {
     </Container>
   );
 }
+
+MovieDetails.defaultProps = {
+  category: [],
+  productionComp: [],
+  poster_path: "",
+  name: "",
+  tagline: "",
+  releaseDate: "",
+  lang: "",
+  revenue: "",
+  avgRating: "",
+  runtime: "",
+  votingCount: "",
+  onClick: "",
+  desc: ""
+};
 
 export default MovieDetails;

@@ -77,7 +77,7 @@ exports.movies_get_movie = (req, res, next) => {
 
   axios({
     method: "get",
-    url: `https://api.themoviedb.org/3/movie/${id}`
+    url: `https://api.themoviedb.org/3/movie/${id}?api_key=${config.api_key}`
   })
     .then(result => {
       result = result.data;

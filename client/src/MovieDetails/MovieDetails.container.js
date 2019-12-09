@@ -22,8 +22,17 @@ class MovieDetails extends Component {
     fetch(`${config.apiUrl}/api/movies/${movieId}`)
       .then(response => response.json())
       .then(result => {
-        //console.log(result);
-        this.setState({ movieDetails: result.details });
+        console.log(result);
+        if (result.details) {
+          this.setState({ movieDetails: result.details });
+        } else {
+          console.log(
+            "some error occurred to procress your request, Please try again"
+          );
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
       });
   }
   timeConvert(n) {
@@ -40,6 +49,7 @@ class MovieDetails extends Component {
     history.push(`/shows/${this.state.movieDetails.id}`);
   }
   render() {
+    console.log();
     return (
       <MovieDetailsComponent
         id={this.state.movieDetails.id}
@@ -62,17 +72,19 @@ class MovieDetails extends Component {
 }
 
 MovieDetails.defaultProps = {
-  name: "",
-  tagline: "",
-  lang: "",
-  poster_path: "",
-  releaseDate: "",
-  desc: "",
-  avgRating: 0,
-  votingCount: 0,
-  category: [],
-  runtime: 0,
-  productionComp: []
+  // currentMovieDetails: {
+  //   name: "",
+  //   tagline: "",
+  //   lang: "",
+  //   poster_path: "",
+  //   releaseDate: "",
+  //   desc: "",
+  //   avgRating: 0,
+  //   votingCount: 0,
+  //   category: [],
+  //   runtime: 0,
+  //   productionComp: []
+  // }
 };
 
 export default MovieDetails;

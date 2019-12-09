@@ -7,31 +7,27 @@ import ShowsList from "../ShowsList/ShowsList.container";
 
 function MovieTemplate(props) {
   const [selectedEventState, setSelectedEventState] = useState({});
-
+  const { name, desc, releaseDate, avg_rating, poster_path } = {
+    ...props.currentMovieDetails
+  };
   return (
     <Container className="movie-shows-list">
       <Row>
         <Col md={4}>
-          <img src={props.currentMovieDetails.poster_path} alt="movie banner" />
+          <img src={poster_path} alt="movie banner" />
         </Col>
         <Col md={8}>
-          <h2 className="text-dark font-weight-bold">
-            {props.currentMovieDetails.name}
-          </h2>
-          <h5 className="font-italic font-weight-light text-dark">
-            {props.currentMovieDetails.desc}
-          </h5>
+          <h2 className="text-dark font-weight-bold">{name}</h2>
+          <h5 className="font-italic font-weight-light text-dark">{desc}</h5>
           <br />
           <h5 className="text-mute">
             <span className="text-mute"> Release Date:</span>
-            <span className="text-danger">
-              {props.currentMovieDetails.releaseDate}
-            </span>
+            <span className="text-danger">{releaseDate}</span>
           </h5>
           <h5>
             <span className="text-mute">Average Rating : </span>
             <span className="text-danger">
-              <FaFilm /> {props.currentMovieDetails.avg_rating}
+              <FaFilm /> {avg_rating}
             </span>
           </h5>
         </Col>

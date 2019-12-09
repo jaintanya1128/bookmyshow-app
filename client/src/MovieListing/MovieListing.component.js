@@ -4,33 +4,25 @@ import history from "../history";
 import { FaHeart } from "react-icons/fa";
 
 function MovieListingComponent(props) {
-  const selectedMovieDetail = {
-    id: props.id,
-    name: props.name,
-    lang: props.lang,
-    poster_path: props.poster_path,
-    releaseDate: props.releaseDate,
-    desc: props.desc,
-    avg_rating: props.avg_rating
-  };
-
+  const selectedMovieDetail = { ...props };
+  let { id, poster_path, name, releaseDate, avg_rating, desc } = { ...props };
   return (
     <Card
       onClick={() => {
         props.onClick(selectedMovieDetail);
-        history.push(`/movie/${props.id}`);
+        history.push(`/movie/${id}`);
       }}
     >
-      <Card.Img variant="top" src={props.poster_path} />
+      <Card.Img variant="top" src={poster_path} />
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          Release Date: {props.releaseDate}
+          Release Date: {releaseDate}
         </Card.Subtitle>
         <Card.Subtitle className="mb-2 text-danger">
-          <FaHeart /> {props.avg_rating}
+          <FaHeart /> {avg_rating}
         </Card.Subtitle>
-        <Card.Text>{props.desc}</Card.Text>
+        <Card.Text>{desc}</Card.Text>
         <Button variant="primary">Book Now</Button>
       </Card.Body>
     </Card>
