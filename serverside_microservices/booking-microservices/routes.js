@@ -4,7 +4,7 @@ const cors = require("cors");
 module.exports = function(app) {
   //HTTP request logger middleware
   app.use(morgan("dev"));
-  app.use(cors());
+
   //Routes
   app.use("/", bookingRoutes);
 

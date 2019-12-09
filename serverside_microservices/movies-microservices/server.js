@@ -4,6 +4,9 @@ const routes = require("./routes");
 const PORT = process.env.PORT;
 const app = express();
 
+//to handle cors errors
+app.use(cors());
+
 //initialize the Body Parser Middleware
 app.use(express.json()); //this will handle raw json
 

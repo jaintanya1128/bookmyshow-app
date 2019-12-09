@@ -4,7 +4,6 @@ const cors = require("cors");
 module.exports = function(app) {
   //HTTP request logger middleware
   app.use(morgan("dev"));
-  app.use(cors());
 
   // Routes which should handle requests
   app.use("/", movieRoutes);
