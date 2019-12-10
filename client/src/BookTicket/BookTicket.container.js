@@ -132,13 +132,20 @@ class BookTicket extends Component {
 
   render() {
     console.log("bookTicket:render");
-    let { selectedEventDetails } = this.props;
+    let {
+      selectedEventDetails: {
+        show_date = "",
+        show_time = "",
+        hall: { total_columns = 0, total_rows = 0 }
+      }
+    } = this.props;
+
     return (
       <BookTicketComponent
-        totalRows={selectedEventDetails.hall.total_rows}
-        totalRows={selectedEventDetails.hall.total_columns}
-        showDate={selectedEventDetails.show_date}
-        showTime={selectedEventDetails.show_time}
+        totalRows={total_rows}
+        totalRows={total_columns}
+        showDate={show_date}
+        showTime={show_time}
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}
