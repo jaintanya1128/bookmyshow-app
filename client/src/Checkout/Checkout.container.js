@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Cart() {
-	return null;
+  return null;
 }
 
 export default Cart;

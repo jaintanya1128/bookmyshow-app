@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookTicketComponent from "./BookTicket.component";
+import BookTicketComponent from "./BookTicket.component.jsx";
 import config from "../config.json";
 
 class BookTicket extends Component {
@@ -132,12 +132,13 @@ class BookTicket extends Component {
 
   render() {
     console.log("bookTicket:render");
+    let { selectedEventDetails } = this.props;
     return (
       <BookTicketComponent
-        totalRows={this.props.selectedEventDetails.hall.total_rows}
-        totalRows={this.props.selectedEventDetails.hall.total_columns}
-        showDate={this.props.selectedEventDetails.show_date}
-        showTime={this.props.selectedEventDetails.show_time}
+        totalRows={selectedEventDetails.hall.total_rows}
+        totalRows={selectedEventDetails.hall.total_columns}
+        showDate={selectedEventDetails.show_date}
+        showTime={selectedEventDetails.show_time}
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}
@@ -147,5 +148,7 @@ class BookTicket extends Component {
     );
   }
 }
+
 BookTicket.defaultProps = {};
+
 export default BookTicket;

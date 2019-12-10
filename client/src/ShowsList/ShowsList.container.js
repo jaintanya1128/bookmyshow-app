@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import config from "../config.json";
-import ShowsListComponent from "./ShowsList.component";
+import ShowsListComponent from "./ShowsList.component.jsx";
 
 class ShowsList extends Component {
   constructor(props) {

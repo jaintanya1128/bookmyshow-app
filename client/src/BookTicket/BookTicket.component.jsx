@@ -85,5 +85,16 @@ function BookTicket(props) {
     </Container>
   );
 }
-
+BookTicket.defaultProps = {
+  selectedEventDetails: {
+    booked_seat: [],
+    show_date: "",
+    show_time: "",
+    status: "",
+    theater: "",
+    theater_address: "",
+    total_seat_count: 0,
+    hall: {}
+  }
+};
 export default BookTicket;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import config from "../config.json";
 import history from "../history";
 
-import MovieDetailsComponent from "./MovieDetails.component";
+import MovieDetailsComponent from "./MovieDetails.component.jsx";
 
 class MovieDetails extends Component {
   constructor(props) {
@@ -69,21 +69,5 @@ class MovieDetails extends Component {
     );
   }
 }
-
-MovieDetails.defaultProps = {
-  currentMovieDetails: {
-    name: "",
-    tagline: "",
-    lang: "",
-    poster_path: "",
-    releaseDate: "",
-    desc: "",
-    avgRating: 0,
-    votingCount: 0,
-    category: [],
-    runtime: 0,
-    productionComp: []
-  }
-};
 
 export default MovieDetails;

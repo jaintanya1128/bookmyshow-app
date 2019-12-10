@@ -3,15 +3,16 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import "./App.scss";
 
-import Header from "./common/Header.component";
-import Footer from "./common/Footer.component";
+import Header from "./common/Header.component.jsx";
+import Footer from "./common/Footer.component.jsx";
+import Thanks from "./ThankYou/ThankYou.component.jsx";
 
 import MovieListing from "./MovieListing/MovieListing.container";
 import MovieDetails from "./MovieDetails/MovieDetails.container";
 
-import Cart from "./Cart";
+import Cart from "./Checkout/Checkout.container";
 import history from "./history";
-import MovieTemplate from "./MovieTemplate/MovieTemplate.component";
+import MovieTemplate from "./MovieTemplate/MovieTemplate.component.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -65,6 +66,7 @@ class App extends Component {
                 )}
               />
               <Route path="/checkout" component={Cart} />
+              <Route path="/thanks" component={Thanks} />
             </Switch>
           </main>
           <Footer />
