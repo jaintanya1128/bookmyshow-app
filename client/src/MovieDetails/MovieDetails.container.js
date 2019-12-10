@@ -35,12 +35,11 @@ class MovieDetails extends Component {
         console.log(err.message);
       });
   }
-  timeConvert(n) {
-    var num = n;
-    var hours = num / 60;
-    var rhours = Math.floor(hours);
-    var minutes = (hours - rhours) * 60;
-    var rminutes = Math.round(minutes);
+  timeConvert(time) {
+    const hours = time / 60;
+    const rhours = Math.floor(hours);
+    const minutes = (hours - rhours) * 60;
+    const rminutes = Math.round(minutes);
 
     return `${rhours} hour(s) and ${rminutes} minute(s).`;
   }
@@ -72,19 +71,19 @@ class MovieDetails extends Component {
 }
 
 MovieDetails.defaultProps = {
-  // currentMovieDetails: {
-  //   name: "",
-  //   tagline: "",
-  //   lang: "",
-  //   poster_path: "",
-  //   releaseDate: "",
-  //   desc: "",
-  //   avgRating: 0,
-  //   votingCount: 0,
-  //   category: [],
-  //   runtime: 0,
-  //   productionComp: []
-  // }
+  currentMovieDetails: {
+    name: "",
+    tagline: "",
+    lang: "",
+    poster_path: "",
+    releaseDate: "",
+    desc: "",
+    avgRating: 0,
+    votingCount: 0,
+    category: [],
+    runtime: 0,
+    productionComp: []
+  }
 };
 
 export default MovieDetails;

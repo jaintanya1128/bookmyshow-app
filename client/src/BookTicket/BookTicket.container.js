@@ -49,21 +49,25 @@ class BookTicket extends Component {
       "Y",
       "Z"
     ];
-    for (let r = 0; r < this.props.selectedEventDetails.hall.total_rows; r++) {
+    for (
+      let row = 0;
+      row < this.props.selectedEventDetails.hall.total_rows;
+      row++
+    ) {
       for (
-        let c = 1;
-        c < this.props.selectedEventDetails.hall.total_columns;
-        c++
+        let column = 1;
+        column < this.props.selectedEventDetails.hall.total_columns;
+        column++
       ) {
-        seatLayouttemp.push(`${rowName[r]}${c}`);
+        seatLayouttemp.push(`${rowName[row]}${column}`);
       }
       seatLayouttemp.push("");
     }
 
-    this.props.selectedEventDetails.booked_seat.forEach(e1 =>
-      seatLayouttemp.forEach((e2, i) => {
-        if (e1 == e2) {
-          seatLayouttemp[i] = `${e2}:booked`;
+    this.props.selectedEventDetails.booked_seat.forEach(seat =>
+      seatLayouttemp.forEach((teamSeat, index) => {
+        if (seat == teamSeat) {
+          seatLayouttemp[index] = `${teamSeat}:booked`;
         }
       })
     );
@@ -71,15 +75,14 @@ class BookTicket extends Component {
     this.setState({ seatLayout: seatLayouttemp });
   }
 
-  bookingSeatCountChangeHandler(e) {
+  bookingSeatCountChangeHandler(event) {
     this.setState({
-      maxSeatBookingCount: e.target.value
+      maxSeatBookingCount: event.target.value
     });
   }
 
   bookTicketClickHandler() {
-    console.log("im clicked to book final tickets");
-    console.log(this.state.bookedSeats);
+    //console.log(this.state.bookedSeats);
     try {
       fetch(
         `${config.apiUrl}/api/events/shows/${this.props.selectedEventDetails.show_id}`,
@@ -100,10 +103,10 @@ class BookTicket extends Component {
     }
   }
 
-  singleSeatClickHandler(e) {
-    const seat = e.target.value;
+  singleSeatClickHandler(event) {
+    const seat = event.target.value;
     if (this.state.bookedSeats.length < this.state.maxSeatBookingCount) {
-      e.currentTarget.classList.add("selected");
+      event.currentTarget.classList.add("selected");
 
       let tempArry = this.state.seatLayout;
 
