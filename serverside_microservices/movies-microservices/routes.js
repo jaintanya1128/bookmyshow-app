@@ -1,6 +1,6 @@
 const morgan = require("morgan");
 const movieRoutes = require("./api/routes/movies-route");
-const cors = require("cors");
+
 module.exports = function(app) {
   //HTTP request logger middleware
   app.use(morgan("dev"));

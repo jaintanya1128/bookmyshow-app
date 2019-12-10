@@ -42,7 +42,6 @@ app.get("/", async (req, res) => {
   } else {
     res.json(response);
   }
-  console.log("tanya");
 });
 
 // Proxy request after authentication

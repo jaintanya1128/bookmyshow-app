@@ -1,6 +1,6 @@
 const morgan = require("morgan");
 const bookingRoutes = require("./api/routes/booking-routes");
-const cors = require("cors");
+
 module.exports = function(app) {
   //HTTP request logger middleware
   app.use(morgan("dev"));
