@@ -1,5 +1,8 @@
 import React from "react";
+
 import history from "../history";
+import textConfig from "../static-content/labelText.json";
+
 import { FaHeart } from "react-icons/fa";
 
 function MovieListingComponent(props) {
@@ -22,13 +25,13 @@ function MovieListingComponent(props) {
       <div className="card-body">
         <div className="card-title">{name}</div>
         <div className="mb-2 text-muted card-subtitle">
-          Release Date: {releaseDate}
+          {textConfig.releaseDate} {releaseDate}
         </div>
         <div className="mb-2 text-danger card-subtitle">
           <FaHeart /> {avg_rating}
         </div>
         <div className="card-text">{desc}</div>
-        <button className="btn btn-primary">Book Now</button>
+        <button className="btn btn-primary">{textConfig.bookNow}</button>
       </div>
     </div>
   );

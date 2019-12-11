@@ -1,4 +1,7 @@
 import React from "react";
+
+import textConfig from "../static-content/labelText.json";
+
 import { FaHeart, FaClock } from "react-icons/fa";
 
 function MovieDetails(props) {
@@ -57,46 +60,54 @@ function MovieDetails(props) {
           <h2 className="text-dark font-weight-bold">{name}</h2>
           <h5 className="font-italic font-weight-light text-dark">{tagline}</h5>
           <br />
-          <h5 className="text-mute">Release Date: {releaseDate}</h5>
           <h5 className="text-mute">
-            Language: {lang === "en" ? "English" : "--"}
+            {textConfig.releaseDate} {releaseDate}
           </h5>
-          <h6 className="text-mute">Revenue: ${revenue}</h6>
+          <h5 className="text-mute">
+            {textConfig.language}{" "}
+            {lang === textConfig.langEngCode
+              ? textConfig.langEngText
+              : textConfig.langEmptyDisplayText}
+          </h5>
+          <h6 className="text-mute">
+            {textConfig.revenue} {textConfig.currencyCodeDolar}
+            {revenue}
+          </h6>
           <hr />
           {categoryList}
           <br />
           <hr />
           <div>
-            <span className="text-mute">Duration : </span>
+            <span className="text-mute">{textConfig.duration} </span>
             <span className="text-danger">
               <FaClock /> {runtime}
             </span>
           </div>
           <div>
-            <span className="text-mute">Average Rating : </span>
+            <span className="text-mute">{textConfig.avgRating} </span>
             <span className="text-danger">
               <FaHeart /> {avgRating}
             </span>
           </div>
           <div>
-            <span className="text-mute">Voting Count : </span>
+            <span className="text-mute">{textConfig.totalCount} </span>
             <span className="text-danger">{votingCount}</span>
           </div>
           <hr />
           <button type="button" className="btn btn-success" onClick={onClick}>
-            Book Ticket
+            {textConfig.bookTicket}
           </button>
         </div>
       </div>
       <div className="row">
         <hr className="w-100" />
         <div className="col-12">
-          <h3> Summary: </h3>
+          <h3> {textConfig.summary}</h3>
           <p>{desc}</p>
         </div>
         <hr className="w-100" />
         <div className="col-12">
-          <h3> Production Company: </h3>
+          <h3>{textConfig.productionComp}</h3>
           <br />
           {productionCompList}
           <br />

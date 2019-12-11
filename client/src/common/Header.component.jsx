@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./header.scss";
+
 import history from "../history";
+import textConfig from "../static-content/labelText.json";
+
 import logo from "../logo.svg";
 
 class Header extends Component {
@@ -37,14 +40,14 @@ class Header extends Component {
               </div>
             </div>
             <div className="p-0 col-sm-3 ">
-              <h1>{"Book my Movie"}</h1>
+              <h1>{textConfig.appName}</h1>
             </div>
             <form className="col" onSubmit={this.searchMovies}>
               <input
                 className="form-control"
                 type="text"
                 name="search"
-                placeholder="search for movies"
+                placeholder={textConfig.searchPlaceholderText}
               />
             </form>
           </div>

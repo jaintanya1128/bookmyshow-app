@@ -1,13 +1,14 @@
 import React from "react";
-
+import textConfig from "../static-content/labelText.json";
+import messages from "../static-content/errorMessage.json";
 function BookTicket(props) {
-  console.log(props.showError);
+  //console.log(props.showError);
   return (
     <div className="container">
       <div className="row">
         <form className="select-seat-form col-md-4">
           <div className="form-group" id="no-of-seats">
-            <div className="form-label d-inline">How many Seats?</div>
+            <div className="form-label d-inline">{textConfig.noOfSeats}</div>
             <select
               className="form-control"
               onChange={props.bookingSeatCountChangeHandler}
@@ -29,13 +30,13 @@ function BookTicket(props) {
         <div className="col-md-4 text-mute">
           <div className="row">
             <div className="col-12">
-              <span className="text-mute"> Show Date:</span>
+              <span className="text-mute">{textConfig.showDate} </span>
               <span className="text-danger">{props.showDate}</span>
             </div>
           </div>
           <div className="row">
             <div className="col-12">
-              <span className="text-mute"> Show Time:</span>
+              <span className="text-mute">{textConfig.showTime} </span>
               <span className="text-danger">{props.showTime}</span>
             </div>
           </div>
@@ -45,7 +46,7 @@ function BookTicket(props) {
             className="btn btn-success btn-book-ticket"
             onClick={props.bookTicketClickHandler}
           >
-            Book Ticket
+            {textConfig.bookTicket}
           </button>
         </div>
       </div>
@@ -54,7 +55,7 @@ function BookTicket(props) {
           className="error"
           style={{ display: props.showError === false ? "none" : "block" }}
         >
-          You are exceeding the maximum seat count selected. Please re-select
+          {messages.exceedSelectSeatCount}
         </p>
       </div>
       <div className="seat-layout-wrap">
@@ -79,7 +80,7 @@ function BookTicket(props) {
         })}
 
         <div className="screen">
-          <span className="text-mute text-small">All eyes this side</span>
+          <span className="text-mute text-small">{textConfig.screenSide}</span>
         </div>
       </div>
     </div>
