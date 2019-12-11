@@ -52,7 +52,7 @@ function BookTicket(props) {
       <Row>
         <p
           className="error"
-          style={{ display: props.showError == false ? "none" : "block" }}
+          style={{ display: props.showError === false ? "none" : "block" }}
         >
           You are exceeding the maximum seat count selected. Please re-select
         </p>

@@ -35,7 +35,7 @@ class MovieListing extends Component {
   }
 
   render() {
-    const productList = this.state.movieList.map(movie => {
+    const movieList = this.state.movieList.map(movie => {
       return (
         <MovieListingComponent
           key={movie.id}
@@ -53,7 +53,7 @@ class MovieListing extends Component {
 
     return (
       <Container>
-        <CardGroup>{productList}</CardGroup>
+        <CardGroup>{movieList}</CardGroup>
       </Container>
     );
   }

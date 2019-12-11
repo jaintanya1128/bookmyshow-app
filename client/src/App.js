@@ -34,7 +34,7 @@ class App extends Component {
                 render={() => (
                   <MovieListing
                     onClick={selectedMovie => {
-                      //console.log("im called from App.js");
+                      //console.log("state set in App.js");
                       this.setState({ selectedMovieDetail: selectedMovie });
                       //console.log(selectedMovie);
                     }}
@@ -43,11 +43,15 @@ class App extends Component {
               />
               <Route
                 path="/movie/:id"
-                render={() => (
-                  <MovieDetails
-                    currentMovieDetails={this.state.selectedMovieDetail}
-                  />
-                )}
+                render={() => {
+                  //console.log("navigating to movie details from App.js");
+                  //console.log(this.state.selectedMovieDetail);
+                  return (
+                    <MovieDetails
+                      currentMovieDetails={this.state.selectedMovieDetail}
+                    />
+                  );
+                }}
               />
               <Route
                 path="/shows/:id"

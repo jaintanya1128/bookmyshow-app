@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BookTicketComponent from "./BookTicket.component.jsx";
 import config from "../config.json";
-
+import history from "../history";
 class BookTicket extends Component {
   constructor(props) {
     super(props);
@@ -49,30 +49,29 @@ class BookTicket extends Component {
       "Y",
       "Z"
     ];
-    for (
-      let row = 0;
-      row < this.props.selectedEventDetails.hall.total_rows;
-      row++
-    ) {
-      for (
-        let column = 1;
-        column < this.props.selectedEventDetails.hall.total_columns;
-        column++
-      ) {
-        seatLayouttemp.push(`${rowName[row]}${column}`);
-      }
-      seatLayouttemp.push("");
-    }
-
-    this.props.selectedEventDetails.booked_seat.forEach(seat =>
-      seatLayouttemp.forEach((teamSeat, index) => {
-        if (seat == teamSeat) {
-          seatLayouttemp[index] = `${teamSeat}:booked`;
+    if (Object.keys(this.props.selectedEventDetails).length > 0) {
+      const { selectedEventDetails } = this.props;
+      for (let row = 0; row < selectedEventDetails.hall.total_rows; row++) {
+        for (
+          let column = 1;
+          column < selectedEventDetails.hall.total_columns;
+          column++
+        ) {
+          seatLayouttemp.push(`${rowName[row]}${column}`);
         }
-      })
-    );
+        seatLayouttemp.push("");
+      }
 
-    this.setState({ seatLayout: seatLayouttemp });
+      selectedEventDetails.booked_seat.forEach(seat =>
+        seatLayouttemp.forEach((teamSeat, index) => {
+          if (seat === teamSeat) {
+            seatLayouttemp[index] = `${teamSeat}:booked`;
+          }
+        })
+      );
+
+      this.setState({ seatLayout: seatLayouttemp });
+    }
   }
 
   bookingSeatCountChangeHandler(event) {
@@ -96,7 +95,10 @@ class BookTicket extends Component {
       )
         .then(response => response.json())
         .then(response => {
-          console.log(response);
+          //console.log(response);
+          if (response.status_code === 200) {
+            history.push("/thanks");
+          }
         });
     } catch (err) {
       console.log(err);
@@ -111,7 +113,7 @@ class BookTicket extends Component {
       let tempArry = this.state.seatLayout;
 
       tempArry[
-        tempArry.map((x, i) => [i, x]).filter(x => x[1] == seat)[0][0]
+        tempArry.map((x, i) => [i, x]).filter(x => x[1] === seat)[0][0]
       ] = `${seat}:booked`;
 
       this.setState({
@@ -122,7 +124,7 @@ class BookTicket extends Component {
         bookedSeats: [...previousState.bookedSeats, seat]
       }));
     } else if (
-      this.state.bookedSeats.length == this.state.maxSeatBookingCount
+      this.state.bookedSeats.length === this.state.maxSeatBookingCount
     ) {
       this.setState({
         showError: true
@@ -132,20 +134,28 @@ class BookTicket extends Component {
 
   render() {
     console.log("bookTicket:render");
-    let {
-      selectedEventDetails: {
-        show_date = "",
-        show_time = "",
-        hall: { total_columns = 0, total_rows = 0 }
-      }
-    } = this.props;
+    let selectedEventDetailsDefaultValue = {
+      show_date: "",
+      show_time: "",
+      booked_seat: [],
+      hall: { total_rows: 0, total_columns: 0 }
+    };
+
+    let { selectedEventDetails } = this.props;
+
+    console.log(selectedEventDetails);
+
+    selectedEventDetails =
+      Object.keys(selectedEventDetails).length === 0
+        ? selectedEventDetailsDefaultValue
+        : selectedEventDetails;
 
     return (
       <BookTicketComponent
-        totalRows={total_rows}
-        totalRows={total_columns}
-        showDate={show_date}
-        showTime={show_time}
+        totalRows={selectedEventDetails.hall.total_rows}
+        totalRows={selectedEventDetails.hall.total_columns}
+        showDate={selectedEventDetails.show_date}
+        showTime={selectedEventDetails.show_time}
         bookTicketClickHandler={this.bookTicketClickHandler}
         singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}

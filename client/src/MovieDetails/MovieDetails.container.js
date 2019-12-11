@@ -14,6 +14,7 @@ class MovieDetails extends Component {
     this.timeConvert = this.timeConvert.bind(this);
   }
   componentDidMount() {
+    //console.log("movie details: componentDidMount");
     let urlArray = window.location.pathname.split("/");
 
     const movieId = urlArray[urlArray.length - 1];
@@ -22,7 +23,7 @@ class MovieDetails extends Component {
     fetch(`${config.apiUrl}/api/movies/${movieId}`)
       .then(response => response.json())
       .then(result => {
-        console.log(result);
+        console.log("movie api result:", result);
         if (result.details) {
           this.setState({ movieDetails: result.details });
         } else {
@@ -48,7 +49,7 @@ class MovieDetails extends Component {
     history.push(`/shows/${this.state.movieDetails.id}`);
   }
   render() {
-    console.log();
+    //console.log("movie details: render");
     return (
       <MovieDetailsComponent
         id={this.state.movieDetails.id}

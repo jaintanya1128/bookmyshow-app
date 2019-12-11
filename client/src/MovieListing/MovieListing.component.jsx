@@ -4,11 +4,16 @@ import history from "../history";
 import { FaHeart } from "react-icons/fa";
 
 function MovieListingComponent(props) {
+  // console.log("Movie Llisting");
+  // console.log(props);
   const selectedMovieDetail = { ...props };
   let { id, poster_path, name, releaseDate, avg_rating, desc } = { ...props };
+
   return (
     <Card
       onClick={() => {
+        console.log("Movie Llisting: movie clicked");
+        console.log(this);
         props.onClick(selectedMovieDetail);
         history.push(`/movie/${id}`);
       }}

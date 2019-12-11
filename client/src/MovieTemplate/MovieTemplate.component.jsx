@@ -6,6 +6,8 @@ import BookTicket from "../BookTicket/BookTicket.container";
 import ShowsList from "../ShowsList/ShowsList.container";
 
 function MovieTemplate(props) {
+  //console.log("Movie template");
+  //console.log(props);
   const [selectedEventState, setSelectedEventState] = useState({});
   const { name, desc, releaseDate, avg_rating, poster_path } = {
     ...props.currentMovieDetails
@@ -38,9 +40,9 @@ function MovieTemplate(props) {
           path="/shows/:id"
           render={() => (
             <ShowsList
-              selectedEventUpdater={selectedEvent => {
-                setSelectedEventState(selectedEvent);
-              }}
+              selectedEventUpdater={selectedEvent =>
+                setSelectedEventState(selectedEvent)
+              }
             />
           )}
         />
