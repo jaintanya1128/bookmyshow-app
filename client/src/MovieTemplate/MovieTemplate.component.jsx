@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
 import { FaFilm } from "react-icons/fa";
 import BookTicket from "../BookTicket/BookTicket.container";
 import ShowsList from "../ShowsList/ShowsList.container";
@@ -13,12 +12,12 @@ function MovieTemplate(props) {
     ...props.currentMovieDetails
   };
   return (
-    <Container className="movie-shows-list">
-      <Row>
-        <Col md={4}>
+    <div className="container movie-shows-list">
+      <div className="row">
+        <div className="col-md-4">
           <img src={poster_path} alt="movie banner" />
-        </Col>
-        <Col md={8}>
+        </div>
+        <div className="col-md-8">
           <h2 className="text-dark font-weight-bold">{name}</h2>
           <h5 className="font-italic font-weight-light text-dark">{desc}</h5>
           <br />
@@ -32,9 +31,9 @@ function MovieTemplate(props) {
               <FaFilm /> {avg_rating}
             </span>
           </h5>
-        </Col>
+        </div>
         <hr className="w-100" />
-      </Row>
+      </div>
       <Switch>
         <Route
           path="/shows/:id"
@@ -53,7 +52,7 @@ function MovieTemplate(props) {
           )}
         />
       </Switch>
-    </Container>
+    </div>
   );
 }
 

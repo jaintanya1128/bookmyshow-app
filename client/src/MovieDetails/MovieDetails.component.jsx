@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import { FaHeart, FaClock } from "react-icons/fa";
 
 function MovieDetails(props) {
@@ -49,12 +48,12 @@ function MovieDetails(props) {
   }
 
   return (
-    <Container className="movie-details-wrap">
-      <Row>
-        <Col md={4}>
+    <div className="container movie-details-wrap">
+      <div className="row">
+        <div className="col-md-4">
           <img src={poster_path} alt="movie banner" />
-        </Col>
-        <Col md={8}>
+        </div>
+        <div className="col-md-8">
           <h2 className="text-dark font-weight-bold">{name}</h2>
           <h5 className="font-italic font-weight-light text-dark">{tagline}</h5>
           <br />
@@ -87,16 +86,16 @@ function MovieDetails(props) {
           <button type="button" className="btn btn-success" onClick={onClick}>
             Book Ticket
           </button>
-        </Col>
-      </Row>
-      <Row>
+        </div>
+      </div>
+      <div className="row">
         <hr className="w-100" />
-        <div>
+        <div className="col-12">
           <h3> Summary: </h3>
           <p>{desc}</p>
         </div>
         <hr className="w-100" />
-        <div>
+        <div className="col-12">
           <h3> Production Company: </h3>
           <br />
           {productionCompList}
@@ -104,8 +103,8 @@ function MovieDetails(props) {
         </div>
         <br />
         <hr className="w-100" />
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 }
 

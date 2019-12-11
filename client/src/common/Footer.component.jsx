@@ -1,12 +1,7 @@
-import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import React from "react";
 
 const Footer = props => {
-  return (
-    <footer>
-      <Navbar></Navbar>
-    </footer>
-  );
+  return <footer></footer>;
 };
 
 export default Footer;

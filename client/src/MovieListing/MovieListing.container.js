@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { CardGroup, Container } from "react-bootstrap";
 import MovieListingComponent from "./MovieListing.component.jsx";
 import config from "../config.json";
 
@@ -52,9 +51,9 @@ class MovieListing extends Component {
     });
 
     return (
-      <Container>
-        <CardGroup>{movieList}</CardGroup>
-      </Container>
+      <div className="container">
+        <div className="card-group">{movieList}</div>
+      </div>
     );
   }
 }

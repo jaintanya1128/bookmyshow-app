@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Navbar, Container, Row, Col, Form } from "react-bootstrap";
 import "./header.scss";
 import history from "../history";
 import logo from "../logo.svg";
@@ -23,32 +22,33 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <Container className="header">
-          <Row className="justify-content-space-between">
-            <Col xs={3} md={2} lg={1} className="p-0">
-              <Navbar className="px-sm-0">
-                <Navbar.Brand href="/" className="p-0">
+        <div className="container header">
+          <div className="row justify-content-space-between">
+            <div className="p-0 col-sm-3 col-md-2 col-lg-1">
+              <div className="navbar px-sm-0">
+                <div href="/" className="navbar-brand p-0">
                   <img
                     alt=""
                     src={logo}
                     height="60"
                     className="logo d-inline-block align-top"
                   />
-                </Navbar.Brand>
-              </Navbar>
-            </Col>
-            <Col xs={3} className="p-0">
+                </div>
+              </div>
+            </div>
+            <div className="p-0 col-sm-3 ">
               <h1>{"Book my Movie"}</h1>
-            </Col>
-            <Form className="col" onSubmit={this.searchMovies}>
-              <Form.Control
+            </div>
+            <form className="col" onSubmit={this.searchMovies}>
+              <input
+                className="form-control"
                 type="text"
                 name="search"
                 placeholder="search for movies"
               />
-            </Form>
-          </Row>
-        </Container>
+            </form>
+          </div>
+        </div>
       </header>
     );
   }

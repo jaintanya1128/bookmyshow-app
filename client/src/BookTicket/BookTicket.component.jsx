@@ -1,15 +1,15 @@
 import React from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+
 function BookTicket(props) {
   console.log(props.showError);
   return (
-    <Container>
-      <Row>
-        <Form className="select-seat-form col-md-4">
-          <Form.Group controlId="no-of-seats">
-            <Form.Label>How many Seats?</Form.Label>
-            <Form.Control
-              as="select"
+    <div className="container">
+      <div className="row">
+        <form className="select-seat-form col-md-4">
+          <div className="form-group" id="no-of-seats">
+            <div className="form-label d-inline">How many Seats?</div>
+            <select
+              className="form-control"
               onChange={props.bookingSeatCountChangeHandler}
             >
               <option value="1">1</option>
@@ -22,41 +22,41 @@ function BookTicket(props) {
               <option value="8">8</option>
               <option value="9">9</option>
               <option value="10">10</option>
-            </Form.Control>
-          </Form.Group>
-        </Form>
+            </select>
+          </div>
+        </form>
 
-        <Col md={4} className="text-mute">
-          <Row>
-            <Col>
+        <div className="col-md-4 text-mute">
+          <div className="row">
+            <div className="col-12">
               <span className="text-mute"> Show Date:</span>
               <span className="text-danger">{props.showDate}</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
               <span className="text-mute"> Show Time:</span>
               <span className="text-danger">{props.showTime}</span>
-            </Col>
-          </Row>
-        </Col>
-        <Col md={4}>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
           <button
             className="btn btn-success btn-book-ticket"
             onClick={props.bookTicketClickHandler}
           >
             Book Ticket
           </button>
-        </Col>
-      </Row>
-      <Row>
+        </div>
+      </div>
+      <div className="row">
         <p
           className="error"
           style={{ display: props.showError === false ? "none" : "block" }}
         >
           You are exceeding the maximum seat count selected. Please re-select
         </p>
-      </Row>
+      </div>
       <div className="seat-layout-wrap">
         {props.seatLayout.map((seat, index) => {
           if (seat !== "") {
@@ -82,7 +82,7 @@ function BookTicket(props) {
           <span className="text-mute text-small">All eyes this side</span>
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
 BookTicket.defaultProps = {
