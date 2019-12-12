@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropType from "prop-types";
 import textConfig from "../static-content/labelText.json";
 
 import { FaHeart, FaClock } from "react-icons/fa";
@@ -20,6 +20,7 @@ function MovieDetails(props) {
     onClick,
     desc
   } = { ...props };
+
   let categoryList = [];
   let productionCompList = [];
   if (category) {
@@ -120,19 +121,37 @@ function MovieDetails(props) {
 }
 
 MovieDetails.defaultProps = {
-  category: [],
-  productionComp: [],
-  poster_path: "",
+  id: 0,
   name: "",
   tagline: "",
-  releaseDate: "",
   lang: "",
-  revenue: "",
-  avgRating: "",
+  poster_path: "",
+  avgRating: 0,
+  releaseDate: "",
+  desc: "",
+  votingCount: 0,
+  category: [],
   runtime: "",
-  votingCount: "",
-  onClick: "",
-  desc: ""
+  revenue: 0,
+  productionComp: [],
+  onClick: ""
+};
+
+MovieDetails.propTypes = {
+  id: PropType.number,
+  name: PropType.string,
+  tagline: PropType.string,
+  lang: PropType.string,
+  poster_path: PropType.string,
+  avgRating: PropType.number,
+  releaseDate: PropType.string,
+  desc: PropType.string,
+  votingCount: PropType.number,
+  category: PropType.arrayOf(PropType.string),
+  runtime: PropType.string,
+  revenue: PropType.number,
+  productionComp: PropType.arrayOf(PropType.object),
+  onClick: PropType.func
 };
 
 export default MovieDetails;

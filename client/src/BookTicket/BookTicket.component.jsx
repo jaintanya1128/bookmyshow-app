@@ -1,8 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import textConfig from "../static-content/labelText.json";
 import messages from "../static-content/errorMessage.json";
+
 function BookTicket(props) {
-  //console.log(props.showError);
+  console.log(props);
+  let {
+    showDate,
+    showTime,
+    seatLayout,
+    showError,
+    bookTicketClickHandler,
+    singleSeatClickHandler,
+    bookingSeatCountChangeHandler
+  } = { ...props };
   return (
     <div className="container">
       <div className="row">
@@ -11,7 +23,7 @@ function BookTicket(props) {
             <div className="form-label d-inline">{textConfig.noOfSeats}</div>
             <select
               className="form-control"
-              onChange={props.bookingSeatCountChangeHandler}
+              onChange={bookingSeatCountChangeHandler}
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -31,20 +43,20 @@ function BookTicket(props) {
           <div className="row">
             <div className="col-12">
               <span className="text-mute">{textConfig.showDate} </span>
-              <span className="text-danger">{props.showDate}</span>
+              <span className="text-danger">{showDate}</span>
             </div>
           </div>
           <div className="row">
             <div className="col-12">
               <span className="text-mute">{textConfig.showTime} </span>
-              <span className="text-danger">{props.showTime}</span>
+              <span className="text-danger">{showTime}</span>
             </div>
           </div>
         </div>
         <div className="col-md-4">
           <button
             className="btn btn-success btn-book-ticket"
-            onClick={props.bookTicketClickHandler}
+            onClick={bookTicketClickHandler}
           >
             {textConfig.bookTicket}
           </button>
@@ -53,19 +65,19 @@ function BookTicket(props) {
       <div className="row">
         <p
           className="error"
-          style={{ display: props.showError === false ? "none" : "block" }}
+          style={{ display: showError === false ? "none" : "block" }}
         >
           {messages.exceedSelectSeatCount}
         </p>
       </div>
       <div className="seat-layout-wrap">
-        {props.seatLayout.map((seat, index) => {
+        {seatLayout.map((seat, index) => {
           if (seat !== "") {
             return (
               <button
                 key={index}
                 className="single-seat"
-                onClick={props.singleSeatClickHandler}
+                onClick={singleSeatClickHandler}
                 disabled={seat.includes(":booked") ? true : false}
                 value={
                   seat.includes(":booked") ? seat.replace(":booked", "") : seat
@@ -87,15 +99,20 @@ function BookTicket(props) {
   );
 }
 BookTicket.defaultProps = {
-  selectedEventDetails: {
-    booked_seat: [],
-    show_date: "",
-    show_time: "",
-    status: "",
-    theater: "",
-    theater_address: "",
-    total_seat_count: 0,
-    hall: {}
-  }
+  showDate: "",
+  showTime: "",
+  seatLayout: [],
+  showError: false
 };
+
+BookTicket.propTypes = {
+  showDate: PropTypes.string,
+  showTime: PropTypes.string,
+  showError: PropTypes.bool,
+  seatLayout: PropTypes.arrayOf(PropTypes.string),
+  bookTicketClickHandler: PropTypes.func,
+  bookingSeatCountChangeHandler: PropTypes.func,
+  singleSeatClickHandler: PropTypes.func
+};
+
 export default BookTicket;

@@ -1,12 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FaHeart } from "react-icons/fa";
 import history from "../history";
 
 function ShowsList(props) {
+  const { eventsList, selectedEventUpdater, movieId } = { ...props };
   return (
     <div className="container movie-shows-list">
-      {props.eventsList.length > 0 &&
-        props.eventsList.map((event, index) => {
+      {eventsList.length > 0 &&
+        eventsList.map((event, index) => {
           return (
             <div className="row" key={index}>
               <FaHeart className="text-danger mt-1" />
@@ -19,8 +21,8 @@ function ShowsList(props) {
                   type="button"
                   className="btn btn-info btn-pill mb-3"
                   onClick={() => {
-                    props.selectedEventUpdater(event);
-                    history.push(`/booking/${props.movieId}`);
+                    selectedEventUpdater(event);
+                    history.push(`/booking/${movieId}`);
                   }}
                 >
                   {event.show_date} - {event.show_time}
@@ -33,5 +35,16 @@ function ShowsList(props) {
     </div>
   );
 }
+
+ShowsList.defaultProps = {
+  eventsList: [],
+  movieId: 0
+};
+
+ShowsList.propTypes = {
+  eventsList: PropTypes.arrayOf(PropTypes.object),
+  selectedEventUpdater: PropTypes.func,
+  movieId: PropTypes.number
+};
 
 export default ShowsList;

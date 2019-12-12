@@ -1,7 +1,12 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import BookTicketComponent from "./BookTicket.component.jsx";
+
 import config from "../config.json";
+
 import history from "../history";
+
 class BookTicket extends Component {
   constructor(props) {
     super(props);
@@ -142,24 +147,25 @@ class BookTicket extends Component {
     };
 
     let { selectedEventDetails } = this.props;
+    //console.log(selectedEventDetails);
 
-    console.log(selectedEventDetails);
-
-    selectedEventDetails =
-      Object.keys(selectedEventDetails).length === 0
-        ? selectedEventDetailsDefaultValue
-        : selectedEventDetails;
+    selectedEventDetails = {
+      ...selectedEventDetailsDefaultValue,
+      ...selectedEventDetails,
+      hall: {
+        ...selectedEventDetailsDefaultValue.hall,
+        ...selectedEventDetails.hall
+      }
+    };
 
     return (
       <BookTicketComponent
-        totalRows={selectedEventDetails.hall.total_rows}
-        totalRows={selectedEventDetails.hall.total_columns}
         showDate={selectedEventDetails.show_date}
         showTime={selectedEventDetails.show_time}
-        bookTicketClickHandler={this.bookTicketClickHandler}
-        singleSeatClickHandler={this.singleSeatClickHandler}
         seatLayout={this.state.seatLayout}
         bookingSeatCountChangeHandler={this.bookingSeatCountChangeHandler}
+        bookTicketClickHandler={this.bookTicketClickHandler}
+        singleSeatClickHandler={this.singleSeatClickHandler}
         showError={this.state.showError}
       />
     );
@@ -168,4 +174,15 @@ class BookTicket extends Component {
 
 BookTicket.defaultProps = {};
 
+BookTicket.propTypes = {
+  selectedEventDetails: PropTypes.shape({
+    show_date: PropTypes.string,
+    show_time: PropTypes.string,
+    booked_seat: PropTypes.arrayOf(PropTypes.string),
+    hall: PropTypes.shape({
+      total_rows: PropTypes.number,
+      total_columns: PropTypes.number
+    })
+  })
+};
 export default BookTicket;

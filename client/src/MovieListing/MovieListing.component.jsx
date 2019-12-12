@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import history from "../history";
 import textConfig from "../static-content/labelText.json";
 
@@ -8,15 +8,16 @@ import { FaHeart } from "react-icons/fa";
 function MovieListingComponent(props) {
   // console.log("Movie Llisting");
   // console.log(props);
+
   const selectedMovieDetail = { ...props };
-  let { id, poster_path, name, releaseDate, avg_rating, desc } = { ...props };
+  const { id, poster_path, name, releaseDate, avg_rating, desc } = { ...props };
 
   return (
     <div
       className="card"
       onClick={() => {
-        console.log("Movie Llisting: movie clicked");
-        console.log(this);
+        console.log("Movie Listing: movie clicked");
+        console.log(selectedMovieDetail);
         props.onClick(selectedMovieDetail);
         history.push(`/movie/${id}`);
       }}
@@ -37,4 +38,14 @@ function MovieListingComponent(props) {
   );
 }
 
+MovieListingComponent.propTypes = {
+  selectedMovieDetail: PropTypes.shape({
+    id: PropTypes.number,
+    poster_path: PropTypes.string,
+    name: PropTypes.string,
+    releaseDate: PropTypes.string,
+    avg_rating: PropTypes.number,
+    desc: PropTypes.string
+  })
+};
 export default MovieListingComponent;

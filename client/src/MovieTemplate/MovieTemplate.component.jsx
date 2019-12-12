@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { FaFilm } from "react-icons/fa";
+
 import BookTicket from "../BookTicket/BookTicket.container";
 import ShowsList from "../ShowsList/ShowsList.container";
 
@@ -55,5 +58,16 @@ function MovieTemplate(props) {
     </div>
   );
 }
+MovieTemplate.defaultProps = {};
+
+MovieTemplate.propTypes = {
+  currentMovieDetails: PropTypes.shape({
+    name: PropTypes.string,
+    desc: PropTypes.string,
+    releaseDate: PropTypes.string,
+    avg_rating: PropTypes.string,
+    poster_path: PropTypes.string
+  })
+};
 
 export default MovieTemplate;

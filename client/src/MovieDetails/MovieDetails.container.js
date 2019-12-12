@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import config from "../config.json";
 import history from "../history";
 
@@ -18,7 +19,7 @@ class MovieDetails extends Component {
     let urlArray = window.location.pathname.split("/");
 
     const movieId = urlArray[urlArray.length - 1];
-    //console.log(movieId);
+    console.log(movieId);
 
     fetch(`${config.apiUrl}/api/movies/${movieId}`)
       .then(response => response.json())
@@ -50,6 +51,7 @@ class MovieDetails extends Component {
   }
   render() {
     //console.log("movie details: render");
+
     return (
       <MovieDetailsComponent
         id={this.state.movieDetails.id}
@@ -70,5 +72,19 @@ class MovieDetails extends Component {
     );
   }
 }
+MovieDetails.defaultProps = {};
+
+MovieDetails.propTypes = {
+  currentMovieDetails: PropTypes.shape({
+    id: PropTypes.number,
+    avg_rating: PropTypes.number,
+    desc: PropTypes.string,
+    lang: PropTypes.string,
+    name: PropTypes.string,
+    onClick: PropTypes.func,
+    poster_path: PropTypes.string,
+    releaseDate: PropTypes.string
+  })
+};
 
 export default MovieDetails;

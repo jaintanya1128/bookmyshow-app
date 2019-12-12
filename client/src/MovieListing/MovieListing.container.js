@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import MovieListingComponent from "./MovieListing.component.jsx";
 import config from "../config.json";
 
@@ -58,15 +59,10 @@ class MovieListing extends Component {
   }
 }
 
-MovieListing.defaultProps = {
-  key: 0,
-  id: 0,
-  name: "",
-  lang: "",
-  poster_path: "",
-  releaseDate: "",
-  desc: "",
-  avg_rating: 0
+MovieListing.defaultProps = {};
+
+MovieListing.propTypes = {
+  onClick: PropTypes.func
 };
 
 export default MovieListing;

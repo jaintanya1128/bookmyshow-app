@@ -1,5 +1,5 @@
 {
-  "name": "example-api-gateway",
+  "name": "api-gateway",
   "private": true,
   "version": "1.0.0",
   "description": "Provide an example for various API Gateway approaches.",
